@@ -1,16 +1,26 @@
-import { NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import { logout } from "../api/auth";
-import { Navigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 const NavBar = () => {
   const [user, setUser] = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Add padding to the top of the body element
+    document.body.style.paddingTop = "64px"; // Adjust this value if your navbar height is different
+
+    // Clean up function to remove the padding when component unmounts
+    return () => {
+      document.body.style.paddingTop = "0px";
+    };
+  }, []);
 
   const handleLogout = () => {
     logout();
     setUser(false);
-    <Navigate to={"/"} />;
+    navigate("/");
   };
 
   return (
@@ -39,15 +49,21 @@ const NavBar = () => {
                         color: isActive ? "white" : "black",
                         background: isActive ? "#5e564e" : "#a79b8e",
                       })}
-<<<<<<< HEAD
-                      className=" flex text-gray-300  px-3 py-2 rounded-3xl  h-[50px] w-[120px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-3xl "
+                      className="flex text-gray-300 px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
                       to="/recipes"
-=======
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
-                      to="/transaction"
->>>>>>> origin/main
                     >
                       Recipes
+                    </NavLink>
+                    <NavLink
+                      style={({ isActive }) => ({
+                        fontWeight: isActive ? "bold" : "normal",
+                        color: isActive ? "white" : "black",
+                        background: isActive ? "#5e564e" : "#a79b8e",
+                      })}
+                      className="flex text-gray-300 px-3 py-2 rounded-2xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      to="/transaction"
+                    >
+                      Transactions
                     </NavLink>
                     <NavLink
                       to="/profile"
@@ -92,11 +108,10 @@ const NavBar = () => {
                         color: isActive ? "white" : "black",
                         background: isActive ? "#5e564e" : "#a79b8e",
                       })}
-<<<<<<< HEAD
-                      className=" flex text-gray-300  px-3 py-2 rounded-3xl  h-[50px] w-[120px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-3xl "
-                      to="/recipes"
+                      className="flex text-gray-300 px-3 py-2 rounded-2xl text-4xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      to="/"
                     >
-                      Recipes
+                      Home
                     </NavLink>
                     <NavLink
                       style={({ isActive }) => ({
@@ -104,13 +119,10 @@ const NavBar = () => {
                         color: isActive ? "white" : "black",
                         background: isActive ? "#5e564e" : "#a79b8e",
                       })}
-                      className=" flex text-gray-300  px-3 py-2 rounded-3xl text-4xl h-[50px] w-[120px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear "
-=======
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl text-4xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
->>>>>>> origin/main
-                      to="/"
+                      className="flex text-gray-300 px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      to="/recipes"
                     >
-                      Home
+                      Recipes
                     </NavLink>
                     <NavLink
                       style={({ isActive }) => ({
