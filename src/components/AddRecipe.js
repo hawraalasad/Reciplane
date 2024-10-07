@@ -1,143 +1,96 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { createRecipe } from "../api/recipes";
 
-const AddNote = ({ show, onClose, onSave }) => {
-  const [title, setTitle] = useState("");
-  const [topics, setTopics] = useState([]);
+const AddRecipe = ({ show, onClose, onSave }) => {
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const queryClient = useQueryClient();
-  const { mutate: addRecipe } = useMutation({
-    mutationFn: () =>
-      createRecipe({
-        title,
-        topic: topics,
-        description,
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["notes"]);
-      onClose();
-    },
-  });
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
+  const [image, setImage] = useState(null);
 
-  const handleTopicChange = (e, index) => {
-    const updatedTopics = [...topics];
-    updatedTopics[index] = e.target.value;
-    setTopics(updatedTopics);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const handleAddTopic = () => {
-    setTopics([...topics, ""]);
-  };
-
-  const handleRemoveTopic = (index) => {
-    const updatedTopics = [...topics];
-    updatedTopics.splice(index, 1);
-    setTopics(updatedTopics);
-  };
-
-  const handleFormSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    addRecipe();
-    setTitle("");
-    setTopics([]);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    if (image) {
+      formData.append("image", image);
+    }
+    onSave(formData);
+    setName("");
     setDescription("");
+    setImage(null);
   };
 
-  if (!show) {
-    return null;
-  }
+  if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-10">
-      <div className="bg-gray-800 rounded-md shadow-md w-full max-w-md p-6 overflow-scroll max-h-[70%]">
-        <h2 className="text-3xl text-white font-semibold mb-6">Add Note</h2>
-        <form onSubmit={handleFormSubmit}>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-lg w-96">
+        <h2 className="text-2xl font-bold mb-4">Add New Recipe</h2>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="title"
-              className="block text-white text-sm font-medium mb-2"
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
             >
-              Title
+              Recipe Name
             </label>
             <input
               type="text"
-              id="title"
-              value={title}
-              onChange={handleTitleChange}
-              className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               required
             />
           </div>
           <div className="mb-4">
             <label
-              htmlFor="topics"
-              className="block text-white text-sm font-medium mb-2"
+              htmlFor="image"
+              className="block text-sm font-medium text-gray-700"
             >
-              Topics
+              Image
             </label>
-            {topics.map((topic, index) => (
-              <div key={index} className="flex items-center mb-2">
-                <input
-                  type="text"
-                  value={topic}
-                  onChange={(e) => handleTopicChange(e, index)}
-                  className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveTopic(index)}
-                  className="ml-2 px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={handleAddTopic}
-              className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-            >
-              Add Topic
-            </button>
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="description"
-              className="block text-white text-sm font-medium mb-2"
-            >
-              Body
-            </label>
-            <textarea
-              id="body"
-              value={description}
-              onChange={handleDescriptionChange}
-              className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows={4}
-              required
+            <input
+              type="file"
+              id="image"
+              onChange={(e) => setImage(e.target.files[0])}
+              className="mt-1 block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold
+                file:bg-violet-50 file:text-violet-700
+                hover:file:bg-violet-100"
+              accept="image/*"
             />
           </div>
-          <div className="flex justify-center">
+          <div className="mb-4">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <div className="flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
             >
-              Save
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="ml-2 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
-            >
-              Cancel
+              Save Recipe
             </button>
           </div>
         </form>
@@ -146,4 +99,4 @@ const AddNote = ({ show, onClose, onSave }) => {
   );
 };
 
-export default AddNote;
+export default AddRecipe;

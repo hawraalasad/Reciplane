@@ -3,7 +3,7 @@ import { setToken, deleteToken } from "./storage";
 
 const login = async (user) => {
   try {
-    const res = await instance.post("/auth/login", user);
+    const res = await instance.post("/api/login", user);
     setToken(res.data.token);
     return res.data;
   } catch (error) {
@@ -12,17 +12,13 @@ const login = async (user) => {
 };
 
 const register = async (user) => {
-  const res = await instance.post("/auth/register", user);
+  const res = await instance.post("/api/signup", user);
   return res.data;
 };
 
 const logout = async () => {
-  await instance.post("/auth/logout");
+  await instance.post("/api/logout");
   deleteToken();
 };
-const getAllRecipes = async () => {
-  const res = await instance.get("/recipes");
-  return res.data;
-};
 
-export { login, register, logout, getAllRecipes };
+export { login, register, logout };
