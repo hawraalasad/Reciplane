@@ -10,6 +10,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
+import Recipe from "./pages/Recipe";
+import Recipes from "./pages/Recipes";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/recipes/:recipeId",
+        element: <Recipe />,
+      },
+      {
+        path: "/recipes",
+        element: <Recipes />,
       },
       {
         path: "/region/:name",

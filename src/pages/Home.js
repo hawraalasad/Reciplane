@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-[#37B0E6]">
       {" "}
       <div style={{ backgroundColor: "#37B0E6", height: "100vh" }}>
         <div className="flex justify-center items-center gap-10">

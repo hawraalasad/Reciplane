@@ -39,10 +39,15 @@ const NavBar = () => {
                         color: isActive ? "white" : "black",
                         background: isActive ? "#5e564e" : "#a79b8e",
                       })}
+<<<<<<< HEAD
+                      className=" flex text-gray-300  px-3 py-2 rounded-3xl  h-[50px] w-[120px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-3xl "
+                      to="/recipes"
+=======
                       className="flex text-gray-300 px-3 py-2 rounded-2xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
                       to="/transaction"
+>>>>>>> origin/main
                     >
-                      Transactions
+                      Recipes
                     </NavLink>
                     <NavLink
                       to="/profile"
@@ -87,7 +92,22 @@ const NavBar = () => {
                         color: isActive ? "white" : "black",
                         background: isActive ? "#5e564e" : "#a79b8e",
                       })}
+<<<<<<< HEAD
+                      className=" flex text-gray-300  px-3 py-2 rounded-3xl  h-[50px] w-[120px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-3xl "
+                      to="/recipes"
+                    >
+                      Recipes
+                    </NavLink>
+                    <NavLink
+                      style={({ isActive }) => ({
+                        fontWeight: isActive ? "bold" : "normal",
+                        color: isActive ? "white" : "black",
+                        background: isActive ? "#5e564e" : "#a79b8e",
+                      })}
+                      className=" flex text-gray-300  px-3 py-2 rounded-3xl text-4xl h-[50px] w-[120px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear "
+=======
                       className="flex text-gray-300 px-3 py-2 rounded-2xl text-4xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+>>>>>>> origin/main
                       to="/"
                     >
                       Home
