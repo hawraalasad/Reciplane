@@ -20,5 +20,9 @@ const logout = async () => {
   await instance.post("/auth/logout");
   deleteToken();
 };
+const getAllRecipes = async () => {
+  const res = await instance.get("/recipes");
+  return res.data;
+};
 
-export { login, register, logout };
+export { login, register, logout, getAllRecipes };
