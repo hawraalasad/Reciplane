@@ -17,7 +17,7 @@ function App() {
   }, []);
   return (
     <UserContext.Provider value={[user, setUser]}>
-      <div className="App font-mono  ">
+      <div className="App font-mono ">
         <NavBar />
         <Outlet />
       </div>
