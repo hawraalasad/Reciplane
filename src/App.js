@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import "./App.css";
 import { Link, Outlet } from "react-router-dom";

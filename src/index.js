@@ -12,6 +12,12 @@ import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Recipe from "./pages/Recipe";
 import Recipes from "./pages/Recipes";
+import Australia from "./pages/Australia";
+import Europe from "./pages/Europe";
+import SouthAmerica from "./pages/SouthAmerica";
+import NorthAmerica from "./pages/NorthAmerica";
+import Asia from "./pages/Asia";
+import Africa from "./pages/Africa";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -48,6 +54,22 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
       },
+      {
+        path: "/australia",
+        element: <Australia />,
+      },
+      {
+        path: "/europe",
+        element: <Europe />,
+      },
+      {
+        path: "/south-america",
+        element: <SouthAmerica />,
+      },
+      { path: "/north america", element: <NorthAmerica /> },
+      { path: "/asia", element: <Asia /> },
+      { path: "/africa", element: <Africa /> },
+      { path: "/ausralia", element: <Australia /> },
     ],
   },
 ]);
