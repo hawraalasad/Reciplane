@@ -18,37 +18,28 @@ const Recipes = () => {
     queryFn: getAllRecipes,
   });
 
-  console.log("Recipes data:", recipes);
-
   const handleAddRecipeClick = () => {
-    console.log("Add Recipe button clicked");
     setIsAddRecipeOpen(true);
   };
 
-  if (isLoading)
-    return (
-      <div className="text-center text-gray-800 text-2xl animate-pulse">
-        Cooking up some recipes...
-      </div>
-    );
-  if (isError)
-    return (
-      <div className="text-center text-red-600 text-2xl">
-        Oops! Our chef dropped the cookbook!
-      </div>
-    );
-
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
-      <h1 className="text-5xl text-blue-600 font-bold mb-8 text-center flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-        <Globe className="mr-4 text-yellow-500 animate-spin-slow" /> Tasty World
+    <div className="bg-gradient-to-b from-[#37B0E6] to-[#84B850] min-h-screen p-8 relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full animate-bounce"></div>
+      <div className="absolute bottom-10 right-10 w-16 h-16 bg-pink-400 rounded-full animate-pulse"></div>
+      <div className="absolute top-1/4 right-1/4 w-12 h-12 bg-green-300 rotate-45 animate-spin"></div>
+      <div className="absolute bottom-1/4 left-1/4 w-24 h-24 bg-purple-400 rounded-tl-3xl rounded-br-3xl animate-wiggle"></div>
+
+      <h1 className="text-5xl text-white font-bold mb-8 text-center flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
+        <Globe className="mr-4 text-yellow-300 animate-spin-slow" /> Tasty World
         Tour
       </h1>
+
       {user && (
         <div className="mb-8 flex justify-end">
           <button
             onClick={handleAddRecipeClick}
-            className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors duration-300 flex items-center"
+            className="bg-white text-[#37B0E6] px-6 py-3 rounded-full hover:bg-yellow-300 hover:text-white transition-colors duration-300 flex items-center font-bold shadow-lg transform hover:scale-105"
           >
             <Plus className="mr-2" /> Add New Recipe
           </button>
@@ -82,12 +73,10 @@ const Recipes = () => {
                 ))}
               </ul>
             </div>
-            <button className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 font-bold shadow-md">
-              Let's Cook!
-            </button>
           </div>
         ))}
       </div>
+
       <AddRecipe
         show={isAddRecipeOpen}
         onClose={() => setIsAddRecipeOpen(false)}
