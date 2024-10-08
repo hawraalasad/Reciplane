@@ -5,7 +5,7 @@ import { getRecipe } from "../api/recipes";
 
 const Recipe = () => {
   const { recipeId } = useParams();
-
+  console.log(recipeId, "here is the id");
   const {
     data: recipe,
     isLoading,

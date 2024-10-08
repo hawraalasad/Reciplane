@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Recipe from "./pages/Recipe";
 import Recipes from "./pages/Recipes";
+import OneRecipe from "./pages/OneRecipe";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/recipes/:recipeId",
-        element: <Recipe />,
+        element: <OneRecipe />,
       },
       {
         path: "/recipes",

@@ -1,13 +1,15 @@
 import React, { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllRecipes } from "../api/recipes";
-import { MapPin, Compass, Coffee, Globe, Plus } from "react-feather";
+import { MapPin, Compass, Coffee, Globe, Plus, Filter } from "react-feather";
 import AddRecipe from "../components/AddRecipe";
 import UserContext from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Recipes = () => {
   const [isAddRecipeOpen, setIsAddRecipeOpen] = useState(false);
   const [user] = useContext(UserContext);
+  const [selectedCountry, setSelectedCountry] = useState("All");
 
   const {
     data: recipes,
@@ -23,6 +25,23 @@ const Recipes = () => {
     setIsAddRecipeOpen(true);
   };
 
+  const navigate = useNavigate();
+
+  const handleRecipeClick = (recipeId) => {
+    console.log(recipeId);
+    navigate(`/recipes/${recipeId}`);
+  };
+
+  const countries = [
+    "All",
+    ...new Set(recipes?.map((recipe) => recipe.country.name) || []),
+  ];
+
+  const filteredRecipes =
+    selectedCountry === "All"
+      ? recipes
+      : recipes?.filter((recipe) => recipe.country.name === selectedCountry);
+
   return (
     <div className="bg-gradient-to-b from-[#37B0E6] to-[#84B850] min-h-screen p-8 relative overflow-hidden">
       {/* Decorative elements */}
@@ -36,21 +55,37 @@ const Recipes = () => {
         Tour
       </h1>
 
-      {user && (
-        <div className="mb-8 flex justify-end">
+      <div className="mb-8 flex justify-between items-center">
+        <div className="flex items-center">
+          <Filter className="mr-2 text-white" />
+          <select
+            value={selectedCountry}
+            onChange={(e) => setSelectedCountry(e.target.value)}
+            className="bg-white text-[#37B0E6] px-4 py-2 rounded-full hover:bg-yellow-300 hover:text-white transition-colors duration-300 font-bold shadow-lg"
+          >
+            {countries.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
+        </div>
+        {user && (
           <button
             onClick={handleAddRecipeClick}
             className="bg-white text-[#37B0E6] px-6 py-3 rounded-full hover:bg-yellow-300 hover:text-white transition-colors duration-300 flex items-center font-bold shadow-lg transform hover:scale-105"
           >
             <Plus className="mr-2" /> Add New Recipe
           </button>
-        </div>
-      )}
+        )}
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {recipes?.map((recipe) => (
+        {filteredRecipes?.map((recipe) => (
           <div
             key={recipe.id}
-            className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500"
+            className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500 cursor-pointer"
+            onClick={() => handleRecipeClick(recipe._id)}
           >
             <h2 className="text-2xl text-gray-800 font-bold mb-4 flex items-center">
               <Coffee className="mr-2 text-blue-500" />
