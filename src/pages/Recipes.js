@@ -53,8 +53,18 @@ const Recipes = () => {
             className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500"
           >
             <h2 className="text-2xl text-gray-800 font-bold mb-4 flex items-center">
-              <Coffee className="mr-2 text-blue-500" /> {recipe.title}
+              <Coffee className="mr-2 text-blue-500" />
+              {recipe.name.charAt(0).toUpperCase() + recipe.name.slice(1)}
             </h2>
+            <img
+              src={
+                recipe.image
+                  ? `http://localhost:8000/${recipe.image}`
+                  : "https://cdn-icons-png.freepik.com/512/8344/8344718.png"
+              }
+              alt={recipe.name}
+              className="w-full h-48 object-cover rounded-md mb-4"
+            />
             <p className="text-gray-600 mb-4 flex items-center">
               <MapPin className="mr-2 text-green-500" /> Origin:{" "}
               {recipe.country.name}
