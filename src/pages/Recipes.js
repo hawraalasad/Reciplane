@@ -18,6 +18,7 @@ const Recipes = () => {
     queryFn: getAllRecipes,
   });
 
+  console.log(recipes);
   const handleAddRecipeClick = () => {
     setIsAddRecipeOpen(true);
   };
@@ -46,7 +47,7 @@ const Recipes = () => {
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {recipes.map((recipe) => (
+        {recipes?.map((recipe) => (
           <div
             key={recipe.id}
             className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500"
