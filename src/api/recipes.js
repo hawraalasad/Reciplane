@@ -10,7 +10,6 @@ const getRecipe = async (recipeId) => {
   return data;
 };
 
-<<<<<<< HEAD
 const createRecipe = async (newRecipe) => {
   //form data
   const formData = new FormData();
@@ -18,10 +17,6 @@ const createRecipe = async (newRecipe) => {
     formData.append(key, newRecipe[key]);
   }
   const { data } = await instance.post("/recipes", formData);
-=======
-const createRecipe = async (recipeInfo) => {
-  const { data } = await instance.post("/api/recipes", recipeInfo);
->>>>>>> origin/main
   return data;
 };
 

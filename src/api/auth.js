@@ -12,7 +12,6 @@ const login = async (user) => {
 };
 
 const register = async (user) => {
-<<<<<<< HEAD
   try {
     const formData = new FormData();
     for (const key in user) {
@@ -27,14 +26,6 @@ const register = async (user) => {
 };
 
 const logout = async () => {
-=======
-  const res = await instance.post("/api/signup", user);
-  return res.data;
-};
-
-const logout = async () => {
-  await instance.post("/api/logout");
->>>>>>> origin/main
   deleteToken();
 };
 
