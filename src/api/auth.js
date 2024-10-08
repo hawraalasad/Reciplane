@@ -3,7 +3,7 @@ import { setToken, deleteToken } from "./storage";
 
 const login = async (user) => {
   try {
-    const res = await instance.post("/api/login", user);
+    const res = await instance.post("/auth/login", user);
     setToken(res.data.token);
     return res.data;
   } catch (error) {
