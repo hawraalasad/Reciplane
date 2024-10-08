@@ -14,6 +14,8 @@ const Recipe = () => {
     queryKey: ["recipe", recipeId],
     queryFn: () => getRecipe(recipeId),
   });
+
+  console.log(recipe);
   if (!recipe) return <div>Not found!</div>;
   const {
     title,
