@@ -93,8 +93,6 @@ const NavBar = () => {
                         background: isActive ? "#2980B9" : "#ffffff",
                       })}
                       className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
-                      to="/login"
-                      onClick={handleLogout}
                     >
                       Logout
                     </NavLink>
@@ -142,7 +140,6 @@ const NavBar = () => {
                         background: isActive ? "#2980B9" : "#ffffff",
                       })}
                       className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
-                      to="/register"
                     >
                       Register
                     </NavLink>
