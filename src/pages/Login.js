@@ -13,11 +13,15 @@ const Login = () => {
     setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const { mutate: handleLogin } = useMutation({
+  const { mutate: handleLogin, error } = useMutation({
     mutationKey: ["login"],
     mutationFn: () => login(userInfo),
     onSuccess: () => {
       setUser(checkToken());
+    },
+    onError: (error) => {
+      console.error("Login error:", error);
+      // You can set an error state here and display it to the user
     },
   });
 
@@ -84,6 +88,8 @@ const Login = () => {
         <div className="mt-4 text-center text-sm text-[#37B0E6] animate-bounce">
           Click to start your journey!
         </div>
+
+        {error && <div className="text-red-500">{error.message}</div>}
       </div>
 
       {/* New elements */}
