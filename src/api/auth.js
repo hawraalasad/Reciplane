@@ -29,4 +29,9 @@ const logout = async () => {
   deleteToken();
 };
 
-export { login, register, logout };
+const getMyProfile = async () => {
+  const { data } = await instance.get("/auth/myProfile");
+  return data;
+};
+
+export { login, register, logout, getMyProfile };
