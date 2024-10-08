@@ -58,17 +58,6 @@ const NavBar = () => {
                         background: isActive ? "#2980B9" : "#ffffff",
                       })}
                       className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
-                      to="/transaction"
-                    >
-                      Transactions
-                    </NavLink>
-                    <NavLink
-                      style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "bold",
-                        color: isActive ? "#ffffff" : "#37B0E6",
-                        background: isActive ? "#2980B9" : "#ffffff",
-                      })}
-                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
                       to="/profile"
                     >
                       Profile
