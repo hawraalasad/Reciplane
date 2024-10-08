@@ -26,7 +26,7 @@ const Login = () => {
     handleLogin();
   };
 
-  if (user) return <Navigate to={"/home2"} />;
+  if (user) return <Navigate to={"/"} />;
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center hp-font">

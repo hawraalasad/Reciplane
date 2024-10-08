@@ -12,17 +12,21 @@ const login = async (user) => {
 };
 
 const register = async (user) => {
-  const res = await instance.post("/auth/register", user);
-  return res.data;
+  try {
+    const formData = new FormData();
+    for (const key in user) {
+      formData.append(key, user[key]);
+    }
+    const res = await instance.post("/auth/register", formData);
+    setToken(res.data.token);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const logout = async () => {
-  await instance.post("/auth/logout");
   deleteToken();
 };
-const getAllRecipes = async () => {
-  const res = await instance.get("/recipes");
-  return res.data;
-};
 
-export { login, register, logout, getAllRecipes };
+export { login, register, logout };

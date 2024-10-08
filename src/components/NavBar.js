@@ -8,10 +8,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Add padding to the top of the body element
-    document.body.style.paddingTop = "64px"; // Adjust this value if your navbar height is different
-
-    // Clean up function to remove the padding when component unmounts
+    document.body.style.paddingTop = "64px";
     return () => {
       document.body.style.paddingTop = "0px";
     };
@@ -24,7 +21,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-black/70 backdrop-blur-md flex justify-center items-center hp-font fixed top-0 left-0 right-0 z-50">
+    <nav className="bg-[#37B0E6] backdrop-blur-md flex justify-center items-center hp-font fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="block">
@@ -34,56 +31,56 @@ const NavBar = () => {
                   <>
                     <NavLink
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
-                      to="/home2"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
+                      to="/"
                     >
                       Home
                     </NavLink>
                     <NavLink
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
                       to="/recipes"
                     >
                       Recipes
                     </NavLink>
                     <NavLink
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
                       to="/transaction"
                     >
                       Transactions
                     </NavLink>
                     <NavLink
-                      to="/profile"
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl text-3xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
+                      to="/profile"
                     >
                       Profile
                     </NavLink>
                     <NavLink
-                      to="/users"
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl text-4xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
+                      to="/users"
                     >
                       Users
                     </NavLink>
@@ -91,11 +88,13 @@ const NavBar = () => {
                       to="/login"
                       onClick={handleLogout}
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl text-4xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
+                      to="/login"
+                      onClick={handleLogout}
                     >
                       Logout
                     </NavLink>
@@ -104,33 +103,33 @@ const NavBar = () => {
                   <>
                     <NavLink
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl text-4xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
                       to="/"
                     >
                       Home
                     </NavLink>
                     <NavLink
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
                       to="/recipes"
                     >
                       Recipes
                     </NavLink>
                     <NavLink
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl text-4xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
                       to="/login"
                     >
                       Login
@@ -138,11 +137,12 @@ const NavBar = () => {
                     <NavLink
                       to="/register"
                       style={({ isActive }) => ({
-                        fontWeight: isActive ? "bold" : "normal",
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#5e564e" : "#a79b8e",
+                        fontWeight: isActive ? "bold" : "bold",
+                        color: isActive ? "#ffffff" : "#37B0E6",
+                        background: isActive ? "#2980B9" : "#ffffff",
                       })}
-                      className="flex text-gray-300 px-3 py-2 rounded-2xl text-4xl h-[40px] w-[100px] text-center justify-center items-center hover:rounded-xl transition-all duration-100 ease-linear text-sm"
+                      className="flex px-3 py-2 rounded-2xl font-medium h-[40px] w-[100px] text-center justify-center items-center hover:bg-[#f0f0f0] transition-all duration-100 ease-linear text-sm hover:scale-105"
+                      to="/register"
                     >
                       Register
                     </NavLink>
