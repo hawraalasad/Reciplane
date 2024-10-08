@@ -65,7 +65,7 @@ const Recipes = () => {
             </h2>
             <p className="text-gray-600 mb-4 flex items-center">
               <MapPin className="mr-2 text-green-500" /> Origin:{" "}
-              {recipe.country}
+              {recipe.country.name}
             </p>
             <div className="mb-4">
               <h3 className="text-lg text-gray-800 font-semibold mb-2 flex items-center">
@@ -77,7 +77,7 @@ const Recipes = () => {
                     key={index}
                     className="mb-1 hover:text-blue-500 transition-colors duration-200"
                   >
-                    {ingredient}
+                    {ingredient.name}
                   </li>
                 ))}
               </ul>
