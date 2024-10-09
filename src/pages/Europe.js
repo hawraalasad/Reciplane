@@ -1,15 +1,16 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Coffee, Umbrella, Camera, Compass, Map, Globe } from "react-feather";
+import { motion } from "framer-motion"; // Add this import
 
-const EuropeContainer = styled.div`
+const EuropeContainer = motion(styled.div`
   background-color: #e0f2ff;
   min-height: 100vh;
   padding: 2rem;
   font-family: "Playfair Display", serif;
   position: relative;
   overflow: hidden;
-`;
+`);
 
 const Title = styled.h1`
   font-size: 4.5rem;
@@ -172,7 +173,11 @@ const europeanCountries = [
 
 const Europe = () => {
   return (
-    <EuropeContainer>
+    <EuropeContainer
+      initial={{ opacity: 0, backgroundColor: "#456D1E" }}
+      animate={{ opacity: 1, backgroundColor: "#e0f2ff" }}
+      transition={{ duration: 0.5 }}
+    >
       <Title>Tastes of Europe</Title>
 
       <FloatingElement style={{ top: "5%", left: "5%" }}>

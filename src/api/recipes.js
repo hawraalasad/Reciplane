@@ -1,13 +1,23 @@
-import instance from ".";
+import instance from "./index";
 
 const getAllRecipes = async () => {
-  const { data } = await instance.get("/recipes");
-  return data;
+  try {
+    const response = await instance.get("/recipes");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all recipes:", error);
+    throw error;
+  }
 };
 
 const getRecipe = async (recipeId) => {
-  const { data } = await instance.get(`/recipes/${recipeId}`);
-  return data;
+  try {
+    const response = await instance.get(`/recipes/${recipeId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching recipe:", error);
+    throw error;
+  }
 };
 
 const createRecipe = async (newRecipe) => {

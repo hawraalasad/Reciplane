@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { continents } from "../continents";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
-import airplaneImage from "../media/airplane.png"; // Import the airplane image
+import airplaneImage from "../media/airplane.png";
+import { motion, AnimatePresence } from "framer-motion";
 
 const CustomCursor = createGlobalStyle`
   .plane-cursor {
@@ -36,12 +37,24 @@ const PlaneCursor = styled.img`
   pointer-events: none;
   z-index: 9999;
   display: none;
-  transform: translate(-50%, -50%) rotate(90deg); // Rotate the plane to make it straight
+  transform: translate(-50%, -50%) rotate(90deg);
+`;
+
+const ExpandingSVG = styled(motion.svg)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; // Increase this value
+  pointer-events: none;
 `;
 
 const Home = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isOverMap, setIsOverMap] = useState(false);
+  const [expandingContinent, setExpandingContinent] = useState(null);
+  const navigate = useNavigate();
 
   const handleMouseMove = (e) => {
     setCursorPosition({ x: e.clientX, y: e.clientY });
@@ -57,15 +70,46 @@ const Home = () => {
     };
   }, []);
 
+  const handleContinentClick = (continent, event) => {
+    const path = event.target;
+    const svgBoundingRect = path.ownerSVGElement.getBoundingClientRect();
+    const pathBoundingRect = path.getBoundingClientRect();
+
+    const centerX =
+      (pathBoundingRect.left + pathBoundingRect.right) / 2 -
+      svgBoundingRect.left;
+    const centerY =
+      (pathBoundingRect.top + pathBoundingRect.bottom) / 2 -
+      svgBoundingRect.top;
+
+    setExpandingContinent({
+      continent,
+      path: path.getAttribute("d"),
+      centerX,
+      centerY,
+      clickX: event.clientX,
+      clickY: event.clientY,
+    });
+
+    setTimeout(() => {
+      navigate(`/${continent}`);
+    }, 1000); // Reduced from 1500 to 1000
+  };
+
   return (
-    <div className="flex-grow flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-[#37B0E6] to-[#84B850] relative overflow-hidden p-4">
+    <motion.div
+      className="flex-grow flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-[#37B0E6] to-[#84B850] relative overflow-hidden p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <CustomCursor />
       <PlaneCursor
         src={airplaneImage}
         alt="Airplane cursor"
         style={{
           left: `${cursorPosition.x}px`,
-          top: `${cursorPosition.y}px`,
+          top: `${cursorPosition.y - 15}px`, // Offset by half the height
           display: isOverMap ? "block" : "none",
         }}
       />
@@ -98,22 +142,24 @@ const Home = () => {
           <Geographies geography={continents}>
             {({ geographies }) =>
               geographies.map((geo) => (
-                <Link key={geo.rsmKey} to={`/${geo.properties.continent}`}>
-                  <Geography
-                    geography={geo}
-                    style={{
-                      default: {
-                        fill: "#84B850",
-                        stroke: "#456D1E",
-                        strokeWidth: 1.5,
-                      },
-                      hover: {
-                        fill: "#456D1E",
-                      },
-                    }}
-                    className="transition-colors duration-300"
-                  />
-                </Link>
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  style={{
+                    default: {
+                      fill: "#84B850",
+                      stroke: "#456D1E",
+                      strokeWidth: 1.5,
+                    },
+                    hover: {
+                      fill: "#456D1E",
+                    },
+                  }}
+                  className="transition-colors duration-300"
+                  onClick={(event) =>
+                    handleContinentClick(geo.properties.continent, event)
+                  }
+                />
               ))
             }
           </Geographies>
@@ -127,7 +173,47 @@ const Home = () => {
       {/* Additional decorative elements */}
       <div className="absolute top-20 left-20 w-12 h-12 bg-blue-400 transform rotate-45 animate-pulse"></div>
       <div className="absolute bottom-20 right-20 w-20 h-20 bg-orange-400 rounded-tr-3xl rounded-bl-3xl animate-bounce"></div>
-    </div>
+
+      <AnimatePresence>
+        {expandingContinent && (
+          <ExpandingSVG
+            viewBox={`0 0 ${window.innerWidth} ${window.innerHeight}`}
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <clipPath id="expanding-clip">
+                <motion.path
+                  d={expandingContinent.path}
+                  initial={{
+                    scale: 0,
+                    x: expandingContinent.clickX - expandingContinent.centerX,
+                    y: expandingContinent.clickY - expandingContinent.centerY,
+                  }}
+                  animate={{
+                    scale: 200,
+                    x: 0,
+                    y: 0,
+                  }}
+                  transition={{ duration: 1, ease: "easeInOut" }} // Reduced from 1.5 to 1
+                />
+              </clipPath>
+            </defs>
+            <motion.rect
+              x="0"
+              y="0"
+              width={window.innerWidth}
+              height={window.innerHeight}
+              fill="#456D1E"
+              clipPath="url(#expanding-clip)"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            />
+          </ExpandingSVG>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
