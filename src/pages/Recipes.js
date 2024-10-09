@@ -9,6 +9,7 @@ import {
   Plus,
   Filter,
   Search,
+  ChevronDown,
 } from "react-feather";
 import AddRecipe from "../components/AddRecipe";
 import UserContext from "../context/UserContext";
@@ -19,6 +20,7 @@ const Recipes = () => {
   const [user] = useContext(UserContext);
   const [selectedCountry, setSelectedCountry] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedIngredient, setSelectedIngredient] = useState("All");
 
   const {
     data: recipes,
@@ -46,14 +48,27 @@ const Recipes = () => {
     ...new Set(recipes?.map((recipe) => recipe.country.name) || []),
   ];
 
-  const filteredRecipes =
-    selectedCountry === "All"
-      ? recipes
-      : recipes?.filter((recipe) => recipe.country.name === selectedCountry);
+  const ingredients = [
+    "All",
+    ...new Set(
+      recipes?.flatMap((recipe) => recipe.ingredients.map((ing) => ing.name)) ||
+        []
+    ),
+  ];
 
-  const searchedRecipes = filteredRecipes?.filter((recipe) =>
-    recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredRecipes = recipes
+    ?.filter(
+      (recipe) =>
+        selectedCountry === "All" || recipe.country.name === selectedCountry
+    )
+    .filter(
+      (recipe) =>
+        selectedIngredient === "All" ||
+        recipe.ingredients.some((ing) => ing.name === selectedIngredient)
+    )
+    .filter((recipe) =>
+      recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   return (
     <div className="bg-gradient-to-b from-[#37B0E6] to-[#84B850] min-h-screen p-8 relative overflow-hidden">
@@ -68,8 +83,8 @@ const Recipes = () => {
         Tour
       </h1>
 
-      <div className="mb-8 flex justify-between items-center">
-        <div className="flex items-center space-x-4">
+      <div className="mb-8 flex justify-between items-center flex-wrap gap-4">
+        <div className="flex items-center space-x-4 flex-wrap gap-4">
           <div className="flex items-center">
             <Filter className="mr-2 text-white" />
             <select
@@ -80,6 +95,20 @@ const Recipes = () => {
               {countries.map((country) => (
                 <option key={country} value={country}>
                   {country}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center">
+            <ChevronDown className="mr-2 text-white" />
+            <select
+              value={selectedIngredient}
+              onChange={(e) => setSelectedIngredient(e.target.value)}
+              className="bg-white text-[#37B0E6] px-4 py-2 rounded-full hover:bg-yellow-300 hover:text-white transition-colors duration-300 font-bold shadow-lg"
+            >
+              {ingredients.map((ingredient) => (
+                <option key={ingredient} value={ingredient}>
+                  {ingredient}
                 </option>
               ))}
             </select>
@@ -106,7 +135,7 @@ const Recipes = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {searchedRecipes?.map((recipe) => (
+        {filteredRecipes?.map((recipe) => (
           <div
             key={recipe.id}
             className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500 cursor-pointer flex flex-col"

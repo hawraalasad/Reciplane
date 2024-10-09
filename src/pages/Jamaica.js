@@ -3,7 +3,7 @@ import { useParams, Link, useLocation } from "react-router-dom";
 import { getRecipesByCountry } from "../api/recipes";
 import { useQuery } from "@tanstack/react-query";
 
-const Australia = () => {
+const Jamaica = () => {
   const location = useLocation();
   const countryId = location.pathname.split("/")[1];
 
@@ -54,4 +54,4 @@ const Australia = () => {
   );
 };
 
-export default Australia;
+export default Jamaica;

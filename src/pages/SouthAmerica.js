@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { Sun, Music, Coffee, Feather, Umbrella, Smile } from "react-feather";
 import { motion } from "framer-motion";
 import { createGlobalStyle } from "styled-components";
+import { Link } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
@@ -180,19 +181,21 @@ const SouthAmerica = () => {
 
       <CountryGrid>
         {southAmericanCountries.map((country) => (
-          <CountryCard key={country.name}>
-            <CountryTitle>
-              {country.flag} {country.name}
-            </CountryTitle>
-            <RecipeList>
-              {country.recipes.map((recipe) => (
-                <RecipeItem key={recipe}>
-                  <Coffee size={18} style={{ marginRight: "0.5rem" }} />
-                  {recipe}
-                </RecipeItem>
-              ))}
-            </RecipeList>
-          </CountryCard>
+          <Link to={`/region/${country.name}`} key={country.name}>
+            <CountryCard key={country.name}>
+              <CountryTitle>
+                {country.flag} {country.name}
+              </CountryTitle>
+              <RecipeList>
+                {country.recipes.map((recipe) => (
+                  <RecipeItem key={recipe}>
+                    <Coffee size={18} style={{ marginRight: "0.5rem" }} />
+                    {recipe}
+                  </RecipeItem>
+                ))}
+              </RecipeList>
+            </CountryCard>
+          </Link>
         ))}
       </CountryGrid>
     </SouthAmericaContainer>

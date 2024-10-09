@@ -32,11 +32,8 @@ const createRecipe = async (newRecipe) => {
   return data;
 };
 
-const updateRecipe = async (recipeInfo) => {
-  const { data } = await instance.put(
-    `/api/recipes/${recipeInfo._id}`,
-    recipeInfo
-  );
+const updateRecipe = async (id, recipeInfo) => {
+  const { data } = await instance.put(`/recipes/${id}`, recipeInfo);
   return data;
 };
 
