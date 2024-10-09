@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Sun, Coffee, Compass, Music } from "react-feather";
 import { motion } from "framer-motion"; // Add this import
+import { Link } from "react-router-dom";
 
 const AfricaContainer = motion(styled.div`
   background-color: #f0c300;
@@ -146,19 +147,21 @@ const Africa = () => {
 
       <CountryGrid>
         {africanCountries.map((country) => (
-          <CountryCard key={country.name}>
-            <CountryTitle>
-              {country.flag} {country.name}
-            </CountryTitle>
-            <RecipeList>
-              {country.recipes.map((recipe) => (
-                <RecipeItem key={recipe}>
-                  <Sun size={18} style={{ marginRight: "0.5rem" }} />
-                  {recipe}
-                </RecipeItem>
-              ))}
-            </RecipeList>
-          </CountryCard>
+          <Link to={`/${country.name}`} key={country.name}>
+            <CountryCard key={country.name}>
+              <CountryTitle>
+                {country.flag} {country.name}
+              </CountryTitle>
+              <RecipeList>
+                {country.recipes.map((recipe) => (
+                  <RecipeItem key={recipe}>
+                    <Sun size={18} style={{ marginRight: "0.5rem" }} />
+                    {recipe}
+                  </RecipeItem>
+                ))}
+              </RecipeList>
+            </CountryCard>
+          </Link>
         ))}
       </CountryGrid>
     </AfricaContainer>
