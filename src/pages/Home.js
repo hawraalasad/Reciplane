@@ -32,10 +32,7 @@ const Home = () => {
           <Geographies geography={continents}>
             {({ geographies }) =>
               geographies.map((geo) => (
-                <Link
-                  key={geo.rsmKey}
-                  to={`/region/${geo.properties.continent}`}
-                >
+                <Link key={geo.rsmKey} to={`/${geo.properties.continent}`}>
                   <Geography
                     geography={geo}
                     style={{
