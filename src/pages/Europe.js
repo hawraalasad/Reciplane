@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Coffee, Umbrella, Camera, Compass, Map, Globe } from "react-feather";
 import { motion } from "framer-motion"; // Add this import
+import { Link } from "react-router-dom";
 
 const EuropeContainer = motion(styled.div`
   background-color: #e0f2ff;
@@ -143,31 +144,9 @@ const europeanCountries = [
     ],
   },
   {
-    name: "Germany",
-    flag: "🇩🇪",
-    recipes: [
-      "Schnitzel",
-      "Bratwurst",
-      "Sauerkraut",
-      "Black Forest Cake",
-      "Kartoffelpuffer",
-    ],
-  },
-  {
     name: "Greece",
     flag: "🇬🇷",
     recipes: ["Moussaka", "Souvlaki", "Greek Salad", "Spanakopita", "Baklava"],
-  },
-  {
-    name: "United Kingdom",
-    flag: "🇬🇧",
-    recipes: [
-      "Fish and Chips",
-      "Shepherd's Pie",
-      "Full English Breakfast",
-      "Beef Wellington",
-      "Sticky Toffee Pudding",
-    ],
   },
 ];
 
@@ -204,19 +183,21 @@ const Europe = () => {
 
       <CountryGrid>
         {europeanCountries.map((country) => (
-          <CountryCard key={country.name}>
-            <CountryTitle>
-              {country.flag} {country.name}
-            </CountryTitle>
-            <RecipeList>
-              {country.recipes.map((recipe) => (
-                <RecipeItem key={recipe}>
-                  <Coffee size={18} style={{ marginRight: "0.5rem" }} />
-                  {recipe}
-                </RecipeItem>
-              ))}
-            </RecipeList>
-          </CountryCard>
+          <Link to={`/${country.name}`} key={country.name}>
+            <CountryCard key={country.name}>
+              <CountryTitle>
+                {country.flag} {country.name}
+              </CountryTitle>
+              <RecipeList>
+                {country.recipes.map((recipe) => (
+                  <RecipeItem key={recipe}>
+                    <Coffee size={18} style={{ marginRight: "0.5rem" }} />
+                    {recipe}
+                  </RecipeItem>
+                ))}
+              </RecipeList>
+            </CountryCard>
+          </Link>
         ))}
       </CountryGrid>
     </EuropeContainer>

@@ -1,4 +1,5 @@
 import instance from "./index";
+import { getToken } from "./storage";
 
 const getAllRecipes = async () => {
   try {
@@ -41,4 +42,43 @@ const deleteRecipe = async (recipeId) => {
   return data;
 };
 
-export { getAllRecipes, createRecipe, updateRecipe, deleteRecipe, getRecipe };
+// Add these new functions
+const likeRecipe = async (recipeId) => {
+  try {
+    const response = await instance.post(`/recipes/${recipeId}/like`);
+    return response.data;
+  } catch (error) {
+    console.error("Error liking recipe:", error);
+    throw error;
+  }
+};
+
+const rateRecipe = async (recipeId, rating) => {
+  try {
+    const response = await instance.post(`/recipes/${recipeId}/rate`, {
+      rating,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error rating recipe:", error);
+    throw error;
+  }
+};
+
+// Don't forget to export these new functions
+const getRecipesByCountry = async (country) => {
+  const { data } = await instance.get(`/recipes/country/${country}`);
+  return data;
+};
+
+
+export {
+  getAllRecipes,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe,
+  getRecipe,
+  likeRecipe,
+  rateRecipe,
+  getRecipesByCountry,
+};

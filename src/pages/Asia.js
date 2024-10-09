@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Coffee } from "react-feather";
 import { motion } from "framer-motion"; // Add this import
-
+import { Link } from "react-router-dom";
 const AsiaContainer = motion(styled.div`
   background-color: #fff7ed;
   min-height: 100vh;
@@ -92,31 +92,17 @@ const asianCountries = [
     ],
   },
   {
-    name: "Thailand",
-    bgColor: "#00247D",
+    name: "Iran",
+    bgColor: "#239F40",
     textColor: "#FFFFFF",
-    flag: "🇹🇭",
+    flag: "🇮🇷",
     recipes: [
-      "Pad Thai",
-      "Green Curry",
-      "Tom Yum Soup",
-      "Mango Sticky Rice",
-      "Som Tam (Papaya Salad)",
+      "Ghormeh Sabzi",
+      "Fesenjan",
+      "Chelo Kebab",
+      "Tahdig",
+      "Ash Reshteh",
     ],
-  },
-  {
-    name: "Vietnam",
-    bgColor: "#DA251D",
-    textColor: "#FFFF00",
-    flag: "🇻🇳",
-    recipes: ["Pho", "Banh Mi", "Spring Rolls", "Bun Cha", "Vietnamese Coffee"],
-  },
-  {
-    name: "South Korea",
-    bgColor: "#FFFFFF",
-    textColor: "#000000",
-    flag: "🇰🇷",
-    recipes: ["Bibimbap", "Kimchi", "Korean BBQ", "Japchae", "Tteokbokki"],
   },
 ];
 
@@ -131,19 +117,21 @@ const Asia = () => {
 
       <CountryGrid>
         {asianCountries.map((country) => (
-          <CountryCard key={country.name} bgColor={country.bgColor}>
-            <CountryTitle textColor={country.textColor}>
-              {country.flag} {country.name}
-            </CountryTitle>
-            <RecipeList>
-              {country.recipes.map((recipe) => (
-                <RecipeItem key={recipe} textColor={country.textColor}>
-                  <Coffee size={16} style={{ marginRight: "0.5rem" }} />
-                  {recipe}
-                </RecipeItem>
-              ))}
-            </RecipeList>
-          </CountryCard>
+          <Link to={`/${country.name}`} key={country.name}>
+            <CountryCard key={country.name} bgColor={country.bgColor}>
+              <CountryTitle textColor={country.textColor}>
+                {country.flag} {country.name}
+              </CountryTitle>
+              <RecipeList>
+                {country.recipes.map((recipe) => (
+                  <RecipeItem key={recipe} textColor={country.textColor}>
+                    <Coffee size={16} style={{ marginRight: "0.5rem" }} />
+                    {recipe}
+                  </RecipeItem>
+                ))}
+              </RecipeList>
+            </CountryCard>
+          </Link>
         ))}
       </CountryGrid>
     </AsiaContainer>

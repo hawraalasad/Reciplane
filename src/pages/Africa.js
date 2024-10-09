@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Sun, Coffee, Compass, Music } from "react-feather";
 import { motion } from "framer-motion"; // Add this import
+import { Link } from "react-router-dom";
 
 const AfricaContainer = motion(styled.div`
   background-color: #f0c300;
@@ -105,20 +106,6 @@ const africanCountries = [
     flag: "🇿🇦",
     recipes: ["Bobotie", "Biltong", "Chakalaka", "Malva Pudding", "Boerewors"],
   },
-  {
-    name: "Ghana",
-    bgColor: "#006B3F",
-    textColor: "#FCD116",
-    flag: "🇬🇭",
-    recipes: ["Jollof Rice", "Fufu", "Waakye", "Kelewele", "Red Red"],
-  },
-  {
-    name: "Egypt",
-    bgColor: "#FFFFFF",
-    textColor: "#C8102E",
-    flag: "🇪🇬",
-    recipes: ["Kushari", "Ful Medames", "Molokhia", "Ta'meya", "Umm Ali"],
-  },
 ];
 
 const Africa = () => {
@@ -137,8 +124,7 @@ const Africa = () => {
         <Coffee size={36} color="#016450" />
       </FloatingElement>
       <FloatingElement style={{ bottom: "15%", left: "15%" }}>
-        <Compass size={42} color="#016450" />{" "}
-        {/* Changed from Utensils to Compass */}
+        <Compass size={42} color="#016450" />
       </FloatingElement>
       <FloatingElement style={{ bottom: "10%", right: "5%" }}>
         <Music size={40} color="#016450" />
@@ -146,19 +132,21 @@ const Africa = () => {
 
       <CountryGrid>
         {africanCountries.map((country) => (
-          <CountryCard key={country.name}>
-            <CountryTitle>
-              {country.flag} {country.name}
-            </CountryTitle>
-            <RecipeList>
-              {country.recipes.map((recipe) => (
-                <RecipeItem key={recipe}>
-                  <Sun size={18} style={{ marginRight: "0.5rem" }} />
-                  {recipe}
-                </RecipeItem>
-              ))}
-            </RecipeList>
-          </CountryCard>
+          <Link to={`/${country.name}`} key={country.name}>
+            <CountryCard key={country.name}>
+              <CountryTitle>
+                {country.flag} {country.name}
+              </CountryTitle>
+              <RecipeList>
+                {country.recipes.map((recipe) => (
+                  <RecipeItem key={recipe}>
+                    <Sun size={18} style={{ marginRight: "0.5rem" }} />
+                    {recipe}
+                  </RecipeItem>
+                ))}
+              </RecipeList>
+            </CountryCard>
+          </Link>
         ))}
       </CountryGrid>
     </AfricaContainer>
