@@ -40,7 +40,9 @@ import Australia from "./pages/Australia";
 import Fiji from "./pages/Fiji";
 import PapuaNewGuinea from "./pages/PapuaNewGuinea";
 import NewZealand from "./pages/NewZealand";
-
+import Iran from "./pages/Iran";
+import Japan from "./pages/Japan";
+import China from "./pages/China";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -113,6 +115,9 @@ const router = createBrowserRouter([
       { path: "/fiji", element: <Fiji /> },
       { path: "/papua new guinea", element: <PapuaNewGuinea /> },
       { path: "/new zealand", element: <NewZealand /> },
+      { path: "/iran", element: <Iran /> },
+      { path: "/japan", element: <Japan /> },
+      { path: "/china", element: <China /> },
     ],
   },
 ]);
