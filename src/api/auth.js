@@ -17,7 +17,7 @@ const register = async (user) => {
     for (const key in user) {
       formData.append(key, user[key]);
     }
-    const res = await instance.post("/auth/signup", formData);
+    const res = await instance.post("/auth/register", formData);
     setToken(res.data.token);
     return res.data;
   } catch (error) {

@@ -27,6 +27,7 @@ const createRecipe = async (newRecipe) => {
     formData.append(key, newRecipe[key]);
   }
   const { data } = await instance.post("/recipes", formData);
+  console.log(data);
   return data;
 };
 
