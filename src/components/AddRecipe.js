@@ -186,6 +186,7 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
               accept="image/*"
               onChange={handleImageChange}
               className={inputStyle}
+              required
             />
             {imagePreview && (
               <img
