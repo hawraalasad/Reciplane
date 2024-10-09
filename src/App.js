@@ -22,9 +22,11 @@ function App() {
   return (
     <UserContext.Provider value={[user, setUser]}>
       <QueryClientProvider client={queryClient}>
-        <div className="App font-mono ">
+        <div className="App font-mono flex flex-col min-h-screen">
           <NavBar />
-          <Outlet />
+          <div className="flex-grow">
+            <Outlet />
+          </div>
         </div>
       </QueryClientProvider>
     </UserContext.Provider>
