@@ -46,7 +46,7 @@ const ExpandingSVG = styled(motion.svg)`
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 9999; // Increase this value
+  z-index: 99999; // Increase this value to be the highest possible
   pointer-events: none;
 `;
 

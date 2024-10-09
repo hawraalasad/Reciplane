@@ -56,7 +56,7 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/australia",
+        path: "/Oceania",
         element: <Australia />,
       },
       {

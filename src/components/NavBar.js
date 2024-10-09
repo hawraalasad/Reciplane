@@ -37,7 +37,7 @@ const NavBar = () => {
 
   return (
     <motion.nav
-      className={`backdrop-blur-md flex justify-center items-center hp-font z-10 px-4 py-2 ${currentColors.bg}`}
+      className={`backdrop-blur-md flex justify-center items-center hp-font z-[9999] px-4 py-2 ${currentColors.bg}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

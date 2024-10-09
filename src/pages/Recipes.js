@@ -109,7 +109,7 @@ const Recipes = () => {
         {searchedRecipes?.map((recipe) => (
           <div
             key={recipe.id}
-            className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500 cursor-pointer"
+            className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500 cursor-pointer flex flex-col"
             onClick={() => handleRecipeClick(recipe._id)}
           >
             <h2 className="text-2xl text-gray-800 font-bold mb-4 flex items-center">
@@ -123,7 +123,7 @@ const Recipes = () => {
                   : "https://cdn-icons-png.freepik.com/512/8344/8344718.png"
               }
               alt={recipe.name}
-              className="w-full h-48 object-cover rounded-md mb-4"
+              className="w-full h-80 object-cover rounded-md mb-4"
             />
             <p className="text-gray-600 mb-4 flex items-center">
               <MapPin className="mr-2 text-green-500" /> Origin:{" "}
