@@ -1,7 +1,15 @@
 import React, { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllRecipes } from "../api/recipes";
-import { MapPin, Compass, Coffee, Globe, Plus, Filter } from "react-feather";
+import {
+  MapPin,
+  Compass,
+  Coffee,
+  Globe,
+  Plus,
+  Filter,
+  Search,
+} from "react-feather";
 import AddRecipe from "../components/AddRecipe";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +18,7 @@ const Recipes = () => {
   const [isAddRecipeOpen, setIsAddRecipeOpen] = useState(false);
   const [user] = useContext(UserContext);
   const [selectedCountry, setSelectedCountry] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const {
     data: recipes,
@@ -42,6 +51,10 @@ const Recipes = () => {
       ? recipes
       : recipes?.filter((recipe) => recipe.country.name === selectedCountry);
 
+  const searchedRecipes = filteredRecipes?.filter((recipe) =>
+    recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="bg-gradient-to-b from-[#37B0E6] to-[#84B850] min-h-screen p-8 relative overflow-hidden">
       {/* Decorative elements */}
@@ -56,19 +69,31 @@ const Recipes = () => {
       </h1>
 
       <div className="mb-8 flex justify-between items-center">
-        <div className="flex items-center">
-          <Filter className="mr-2 text-white" />
-          <select
-            value={selectedCountry}
-            onChange={(e) => setSelectedCountry(e.target.value)}
-            className="bg-white text-[#37B0E6] px-4 py-2 rounded-full hover:bg-yellow-300 hover:text-white transition-colors duration-300 font-bold shadow-lg"
-          >
-            {countries.map((country) => (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            ))}
-          </select>
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center">
+            <Filter className="mr-2 text-white" />
+            <select
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+              className="bg-white text-[#37B0E6] px-4 py-2 rounded-full hover:bg-yellow-300 hover:text-white transition-colors duration-300 font-bold shadow-lg"
+            >
+              {countries.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center bg-white rounded-full px-4 py-2 shadow-lg">
+            <Search className="text-[#37B0E6] mr-2" />
+            <input
+              type="text"
+              placeholder="Search recipes..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="bg-transparent focus:outline-none text-[#37B0E6]"
+            />
+          </div>
         </div>
         {user && (
           <button
@@ -81,7 +106,7 @@ const Recipes = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredRecipes?.map((recipe) => (
+        {searchedRecipes?.map((recipe) => (
           <div
             key={recipe.id}
             className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500 cursor-pointer"

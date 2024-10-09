@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Coffee } from "react-feather";
+import { motion } from "framer-motion"; // Add this import
 
-const AsiaContainer = styled.div`
+const AsiaContainer = motion(styled.div`
   background-color: #fff7ed;
   min-height: 100vh;
   padding: 2rem;
   font-family: "Sora", sans-serif;
-`;
+`);
 
 const Title = styled.h1`
   font-size: 3rem;
@@ -121,7 +122,11 @@ const asianCountries = [
 
 const Asia = () => {
   return (
-    <AsiaContainer>
+    <AsiaContainer
+      initial={{ opacity: 0, backgroundColor: "#456D1E" }}
+      animate={{ opacity: 1, backgroundColor: "#fff7ed" }}
+      transition={{ duration: 0.5 }}
+    >
       <Title>Flavors of Asia</Title>
 
       <CountryGrid>

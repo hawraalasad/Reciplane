@@ -1,15 +1,16 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Sun, Coffee, Compass, Music } from "react-feather";
+import { motion } from "framer-motion"; // Add this import
 
-const AfricaContainer = styled.div`
+const AfricaContainer = motion(styled.div`
   background-color: #f0c300;
   min-height: 100vh;
   padding: 2rem;
   font-family: "Kalam", cursive;
   position: relative;
   overflow: hidden;
-`;
+`);
 
 const Title = styled.h1`
   font-size: 4rem;
@@ -122,7 +123,11 @@ const africanCountries = [
 
 const Africa = () => {
   return (
-    <AfricaContainer>
+    <AfricaContainer
+      initial={{ opacity: 0, backgroundColor: "#456D1E" }}
+      animate={{ opacity: 1, backgroundColor: "#f0c300" }}
+      transition={{ duration: 0.5 }}
+    >
       <Title>Tastes of Africa</Title>
 
       <FloatingElement style={{ top: "10%", left: "5%" }}>
