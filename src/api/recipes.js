@@ -43,4 +43,16 @@ const deleteRecipe = async (recipeId) => {
   return data;
 };
 
-export { getAllRecipes, createRecipe, updateRecipe, deleteRecipe, getRecipe };
+const getRecipesByCountry = async (country) => {
+  const { data } = await instance.get(`/recipes/country/${country}`);
+  return data;
+};
+
+export {
+  getAllRecipes,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe,
+  getRecipe,
+  getRecipesByCountry,
+};
