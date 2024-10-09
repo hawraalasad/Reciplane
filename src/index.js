@@ -19,6 +19,7 @@ import NorthAmerica from "./pages/NorthAmerica";
 import Asia from "./pages/Asia";
 import Africa from "./pages/Africa";
 import OneRecipe from "./pages/OneRecipe";
+import India from "./pages/India";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
       },
       { path: "/north america", element: <NorthAmerica /> },
       { path: "/asia", element: <Asia /> },
+      { path: "/india", element: <India /> },
       { path: "/africa", element: <Africa /> },
       { path: "/ausralia", element: <Australia /> },
     ],

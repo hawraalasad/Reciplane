@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Coffee } from "react-feather";
 import { motion } from "framer-motion"; // Add this import
-
+import { Link } from "react-router-dom";
 const AsiaContainer = motion(styled.div`
   background-color: #fff7ed;
   min-height: 100vh;
@@ -117,19 +117,21 @@ const Asia = () => {
 
       <CountryGrid>
         {asianCountries.map((country) => (
-          <CountryCard key={country.name} bgColor={country.bgColor}>
-            <CountryTitle textColor={country.textColor}>
-              {country.flag} {country.name}
-            </CountryTitle>
-            <RecipeList>
-              {country.recipes.map((recipe) => (
-                <RecipeItem key={recipe} textColor={country.textColor}>
-                  <Coffee size={16} style={{ marginRight: "0.5rem" }} />
-                  {recipe}
-                </RecipeItem>
-              ))}
-            </RecipeList>
-          </CountryCard>
+          <Link to={`/${country.name}`} key={country.name}>
+            <CountryCard key={country.name} bgColor={country.bgColor}>
+              <CountryTitle textColor={country.textColor}>
+                {country.flag} {country.name}
+              </CountryTitle>
+              <RecipeList>
+                {country.recipes.map((recipe) => (
+                  <RecipeItem key={recipe} textColor={country.textColor}>
+                    <Coffee size={16} style={{ marginRight: "0.5rem" }} />
+                    {recipe}
+                  </RecipeItem>
+                ))}
+              </RecipeList>
+            </CountryCard>
+          </Link>
         ))}
       </CountryGrid>
     </AsiaContainer>

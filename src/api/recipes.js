@@ -28,6 +28,7 @@ const createRecipe = async (newRecipe) => {
     formData.append(key, newRecipe[key]);
   }
   const { data } = await instance.post("/recipes", formData);
+  console.log(data);
   return data;
 };
 
@@ -68,6 +69,12 @@ const rateRecipe = async (recipeId, rating) => {
 };
 
 // Don't forget to export these new functions
+const getRecipesByCountry = async (country) => {
+  const { data } = await instance.get(`/recipes/country/${country}`);
+  return data;
+};
+
+
 export {
   getAllRecipes,
   createRecipe,
@@ -76,4 +83,5 @@ export {
   getRecipe,
   likeRecipe,
   rateRecipe,
+  getRecipesByCountry,
 };
