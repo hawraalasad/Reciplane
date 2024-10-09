@@ -20,7 +20,14 @@ import Asia from "./pages/Asia";
 import Africa from "./pages/Africa";
 import OneRecipe from "./pages/OneRecipe";
 import India from "./pages/India";
-
+import Italy from "./pages/Italy";
+import France from "./pages/France";
+import Greece from "./pages/Greece";
+import Spain from "./pages/Spain";
+import Morocco from "./pages/Morocco";
+import Ethiopia from "./pages/Ethiopia";
+import SouthAfrica from "./pages/SouthAfrica";
+import Nigeria from "./pages/Nigeria";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -71,8 +78,16 @@ const router = createBrowserRouter([
       { path: "/north america", element: <NorthAmerica /> },
       { path: "/asia", element: <Asia /> },
       { path: "/india", element: <India /> },
+      { path: "/italy", element: <Italy /> },
+      { path: "/france", element: <France /> },
       { path: "/africa", element: <Africa /> },
       { path: "/ausralia", element: <Australia /> },
+      { path: "/greece", element: <Greece /> },
+      { path: "/spain", element: <Spain /> },
+      { path: "/morocco", element: <Morocco /> },
+      { path: "/ethiopia", element: <Ethiopia /> },
+      { path: "/south africa", element: <SouthAfrica /> },
+      { path: "/nigeria", element: <Nigeria /> },
     ],
   },
 ]);
