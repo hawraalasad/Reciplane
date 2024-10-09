@@ -12,14 +12,37 @@ import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Recipe from "./pages/Recipe";
 import Recipes from "./pages/Recipes";
-import Australia from "./pages/Australia";
+import Oceania from "./pages/Oceania";
 import Europe from "./pages/Europe";
 import SouthAmerica from "./pages/SouthAmerica";
 import NorthAmerica from "./pages/NorthAmerica";
 import Asia from "./pages/Asia";
 import Africa from "./pages/Africa";
 import OneRecipe from "./pages/OneRecipe";
-
+import India from "./pages/India";
+import Italy from "./pages/Italy";
+import France from "./pages/France";
+import Greece from "./pages/Greece";
+import Spain from "./pages/Spain";
+import Morocco from "./pages/Morocco";
+import Ethiopia from "./pages/Ethiopia";
+import SouthAfrica from "./pages/SouthAfrica";
+import Nigeria from "./pages/Nigeria";
+import Canada from "./pages/Canada";
+import UnitedStates from "./pages/UnitedStates";
+import Mexico from "./pages/Mexico";
+import Jamaica from "./pages/Jamaica";
+import Peru from "./pages/Peru";
+import Argentina from "./pages/Argentina";
+import Colombia from "./pages/Colombia";
+import Brazil from "./pages/Brazil";
+import Australia from "./pages/Australia";
+import Fiji from "./pages/Fiji";
+import PapuaNewGuinea from "./pages/PapuaNewGuinea";
+import NewZealand from "./pages/NewZealand";
+import Iran from "./pages/Iran";
+import Japan from "./pages/Japan";
+import China from "./pages/China";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -57,7 +80,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/Oceania",
-        element: <Australia />,
+        element: <Oceania />,
       },
       {
         path: "/europe",
@@ -69,8 +92,32 @@ const router = createBrowserRouter([
       },
       { path: "/north america", element: <NorthAmerica /> },
       { path: "/asia", element: <Asia /> },
+      { path: "/india", element: <India /> },
+      { path: "/italy", element: <Italy /> },
+      { path: "/france", element: <France /> },
       { path: "/africa", element: <Africa /> },
-      { path: "/ausralia", element: <Australia /> },
+      { path: "/oceania", element: <Oceania /> },
+      { path: "/greece", element: <Greece /> },
+      { path: "/spain", element: <Spain /> },
+      { path: "/morocco", element: <Morocco /> },
+      { path: "/ethiopia", element: <Ethiopia /> },
+      { path: "/south africa", element: <SouthAfrica /> },
+      { path: "/nigeria", element: <Nigeria /> },
+      { path: "/canada", element: <Canada /> },
+      { path: "/united states", element: <UnitedStates /> },
+      { path: "/mexico", element: <Mexico /> },
+      { path: "/jamaica", element: <Jamaica /> },
+      { path: "/peru", element: <Peru /> },
+      { path: "/argentina", element: <Argentina /> },
+      { path: "/colombia", element: <Colombia /> },
+      { path: "/brazil", element: <Brazil /> },
+      { path: "/australia", element: <Australia /> },
+      { path: "/fiji", element: <Fiji /> },
+      { path: "/papua new guinea", element: <PapuaNewGuinea /> },
+      { path: "/new zealand", element: <NewZealand /> },
+      { path: "/iran", element: <Iran /> },
+      { path: "/japan", element: <Japan /> },
+      { path: "/china", element: <China /> },
     ],
   },
 ]);

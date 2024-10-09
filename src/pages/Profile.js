@@ -18,8 +18,6 @@ const Profile = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  console.log(profile);
-
   const RecipeGrid = ({ recipes }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-6xl">
       {recipes?.map((recipe) => (

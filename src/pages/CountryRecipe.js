@@ -1,11 +1,11 @@
 import React from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getRecipesByCountry } from "../api/recipes";
 import { useQuery } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
 
-const Australia = () => {
-  const location = useLocation();
-  const countryId = location.pathname.split("/")[1];
+const CountryRecipes = () => {
+  const { countryId } = useParams();
 
   const {
     data: recipes,
@@ -31,7 +31,7 @@ const Australia = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recipes.map((recipe) => (
             <Link
-              to={`/recipes/${recipe._id}`}
+              to={`/recipe/${recipe.id}`}
               key={recipe.id}
               className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
               aria-label={`View recipe for ${recipe.name}`}
@@ -54,4 +54,15 @@ const Australia = () => {
   );
 };
 
-export default Australia;
+// Add an error boundary
+const CountryRecipesWithErrorBoundary = () => {
+  return (
+    <ErrorBoundary
+      fallback={<div>Something went wrong. Please try again later.</div>}
+    >
+      <CountryRecipes />
+    </ErrorBoundary>
+  );
+};
+
+export default CountryRecipesWithErrorBoundary;
