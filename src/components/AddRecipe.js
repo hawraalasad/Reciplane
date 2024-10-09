@@ -159,7 +159,7 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
           <X size={24} />
         </motion.button>
         <h2 className="text-4xl font-bold text-white mb-8 text-center font-adventure">
-          Chart Your Recipe
+          Create Your Recipe
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -279,7 +279,7 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
               whileTap={{ scale: 0.95 }}
               className="w-1/2 bg-[#84B850] text-white py-3 rounded-lg hover:bg-[#456D1E] transition-colors duration-300 font-adventure font-bold text-lg shadow-md"
             >
-              Chart Recipe
+              Add Recipe
             </motion.button>
           </div>
         </form>
