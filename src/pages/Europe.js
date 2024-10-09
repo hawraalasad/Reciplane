@@ -143,31 +143,9 @@ const europeanCountries = [
     ],
   },
   {
-    name: "Germany",
-    flag: "🇩🇪",
-    recipes: [
-      "Schnitzel",
-      "Bratwurst",
-      "Sauerkraut",
-      "Black Forest Cake",
-      "Kartoffelpuffer",
-    ],
-  },
-  {
     name: "Greece",
     flag: "🇬🇷",
     recipes: ["Moussaka", "Souvlaki", "Greek Salad", "Spanakopita", "Baklava"],
-  },
-  {
-    name: "United Kingdom",
-    flag: "🇬🇧",
-    recipes: [
-      "Fish and Chips",
-      "Shepherd's Pie",
-      "Full English Breakfast",
-      "Beef Wellington",
-      "Sticky Toffee Pudding",
-    ],
   },
 ];
 

@@ -105,20 +105,6 @@ const africanCountries = [
     flag: "🇿🇦",
     recipes: ["Bobotie", "Biltong", "Chakalaka", "Malva Pudding", "Boerewors"],
   },
-  {
-    name: "Ghana",
-    bgColor: "#006B3F",
-    textColor: "#FCD116",
-    flag: "🇬🇭",
-    recipes: ["Jollof Rice", "Fufu", "Waakye", "Kelewele", "Red Red"],
-  },
-  {
-    name: "Egypt",
-    bgColor: "#FFFFFF",
-    textColor: "#C8102E",
-    flag: "🇪🇬",
-    recipes: ["Kushari", "Ful Medames", "Molokhia", "Ta'meya", "Umm Ali"],
-  },
 ];
 
 const Africa = () => {
@@ -137,8 +123,7 @@ const Africa = () => {
         <Coffee size={36} color="#016450" />
       </FloatingElement>
       <FloatingElement style={{ bottom: "15%", left: "15%" }}>
-        <Compass size={42} color="#016450" />{" "}
-        {/* Changed from Utensils to Compass */}
+        <Compass size={42} color="#016450" />
       </FloatingElement>
       <FloatingElement style={{ bottom: "10%", right: "5%" }}>
         <Music size={40} color="#016450" />
