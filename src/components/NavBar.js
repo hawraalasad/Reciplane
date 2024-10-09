@@ -87,7 +87,7 @@ const NavBar = () => {
             </li>
             <li>
               <NavLink
-                to="/signup"
+                to="/register"
                 className={({ isActive }) =>
                   `${navItemStyle} ${isActive ? "font-bold" : ""}`
                 }
