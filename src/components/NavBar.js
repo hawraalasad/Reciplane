@@ -17,8 +17,8 @@ const NavBar = () => {
   const continentColors = {
     "/": { bg: "bg-[#37B0E6]", button: "bg-white text-[#37B0E6]" },
     "/Asia": { bg: "bg-[#fff7ed]", button: "bg-[#e63946] text-white" },
-    "/Africa": { bg: "bg-[#FFA500]", button: "bg-black text-[#FFA500]" },
-    "/Europe": { bg: "bg-[#0000FF]", button: "bg-white text-[#0000FF]" },
+    "/Africa": { bg: "bg-[#F0C300]", button: "bg-[#016450] text-[#F0C300]" },
+    "/Europe": { bg: "bg-[#e0f2ff]", button: "bg-[#1e3a8a] text-white" }, // Updated Europe colors
     "/NorthAmerica": { bg: "bg-[#FF0000]", button: "bg-white text-[#FF0000]" },
     "/SouthAmerica": { bg: "bg-[#00FF00]", button: "bg-black text-[#00FF00]" },
     "/Australia": { bg: "bg-[#FFD700]", button: "bg-black text-[#FFD700]" },
@@ -32,7 +32,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`${bg} backdrop-blur-md flex justify-center items-center hp-font fixed top-0 left-0 right-0 z-50 px-4 py-2`}
+      className={`${bg} backdrop-blur-md flex justify-center items-center hp-font z-50 px-4 py-2`}
     >
       <ul className="flex space-x-4 items-center">
         <li>
