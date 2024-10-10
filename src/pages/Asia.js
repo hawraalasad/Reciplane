@@ -1,20 +1,31 @@
 import React from "react";
 import styled from "styled-components";
-import { Coffee } from "react-feather";
-import { motion } from "framer-motion"; // Add this import
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import ContinentLayout from "../components/ContinentLayout";
+
 const AsiaContainer = motion(styled.div`
   background-color: #fff7ed;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 4rem 2rem 2rem; // Added top padding
   font-family: "Sora", sans-serif;
 `);
 
 const Title = styled.h1`
-  font-size: 3rem;
+  font-size: 4rem;
   color: #e63946;
   text-align: center;
   margin-bottom: 2rem;
+`;
+
+const TitleBanner = styled.span`
+  background-color: #ffffff;
+  color: #e63946;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  transform: rotate(-3deg);
 `;
 
 const CountryGrid = styled.div`
@@ -26,115 +37,93 @@ const CountryGrid = styled.div`
 const CountryCard = styled.div`
   background-color: ${(props) => props.bgColor || "#FFFFFF"};
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  min-height: 250px;
+
+  &:hover {
+    transform: translateY(-5px) rotate(2deg);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const CountryTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: ${(props) => props.textColor || "#000000"};
+  text-align: center;
+  margin: 1rem 0;
+`;
+
+const CountryFlag = styled.span`
+  font-size: 5rem;
   margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const RecipeList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const RecipeItem = styled.li`
-  margin-bottom: 0.5rem;
-  color: ${(props) => props.textColor || "#000000"};
-  display: flex;
-  align-items: center;
 `;
 
 const asianCountries = [
   {
     name: "India",
+    displayName: "Indian Cuisine",
     bgColor: "#FF9933",
     textColor: "#000080",
     flag: "🇮🇳",
-    recipes: [
-      "Butter Chicken",
-      "Vegetable Biryani",
-      "Palak Paneer",
-      "Tandoori Chicken",
-      "Masala Dosa",
-    ],
   },
   {
     name: "Japan",
+    displayName: "Japanese Cuisine",
     bgColor: "#FFFFFF",
     textColor: "#BC002D",
     flag: "🇯🇵",
-    recipes: [
-      "Sushi Rolls",
-      "Ramen",
-      "Tempura",
-      "Miso Soup",
-      "Teriyaki Chicken",
-    ],
   },
   {
     name: "China",
+    displayName: "Chinese Cuisine",
     bgColor: "#DE2910",
     textColor: "#FFDE00",
     flag: "🇨🇳",
-    recipes: [
-      "Kung Pao Chicken",
-      "Mapo Tofu",
-      "Dim Sum",
-      "Peking Duck",
-      "Hot and Sour Soup",
-    ],
   },
   {
     name: "Iran",
+    displayName: "Persian Cuisine",
     bgColor: "#239F40",
     textColor: "#FFFFFF",
     flag: "🇮🇷",
-    recipes: [
-      "Ghormeh Sabzi",
-      "Fesenjan",
-      "Chelo Kebab",
-      "Tahdig",
-      "Ash Reshteh",
-    ],
   },
 ];
 
 const Asia = () => {
   return (
-    <AsiaContainer
-      initial={{ opacity: 0, backgroundColor: "#456D1E" }}
-      animate={{ opacity: 1, backgroundColor: "#fff7ed" }}
-      transition={{ duration: 0.5 }}
-    >
-      <Title>Flavors of Asia</Title>
+    <ContinentLayout backgroundColor="bg-[#fff7ed]">
+      <AsiaContainer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Title>
+          <TitleBanner>Flavors of Asia</TitleBanner>
+        </Title>
 
-      <CountryGrid>
-        {asianCountries.map((country) => (
-          <Link to={`/${country.name}`} key={country.name}>
-            <CountryCard key={country.name} bgColor={country.bgColor}>
-              <CountryTitle textColor={country.textColor}>
-                {country.flag} {country.name}
-              </CountryTitle>
-              <RecipeList>
-                {country.recipes.map((recipe) => (
-                  <RecipeItem key={recipe} textColor={country.textColor}>
-                    <Coffee size={16} style={{ marginRight: "0.5rem" }} />
-                    {recipe}
-                  </RecipeItem>
-                ))}
-              </RecipeList>
-            </CountryCard>
-          </Link>
-        ))}
-      </CountryGrid>
-    </AsiaContainer>
+        {/* Added gap between title and cards */}
+        <div className="mb-24"></div>
+
+        <CountryGrid>
+          {asianCountries.map((country) => (
+            <Link to={`/${country.name}`} key={country.name}>
+              <CountryCard bgColor={country.bgColor}>
+                <CountryFlag>{country.flag}</CountryFlag>
+                <CountryTitle textColor={country.textColor}>
+                  {country.displayName}
+                </CountryTitle>
+              </CountryCard>
+            </Link>
+          ))}
+        </CountryGrid>
+      </AsiaContainer>
+    </ContinentLayout>
   );
 };
 

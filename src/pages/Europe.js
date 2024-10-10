@@ -1,13 +1,14 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Coffee, Umbrella, Camera, Compass, Map, Globe } from "react-feather";
-import { motion } from "framer-motion"; // Add this import
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import ContinentLayout from "../components/ContinentLayout";
 
 const EuropeContainer = motion(styled.div`
   background-color: #e0f2ff;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 4rem 2rem 2rem; // Added top padding
   font-family: "Playfair Display", serif;
   position: relative;
   overflow: hidden;
@@ -21,6 +22,16 @@ const Title = styled.h1`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
+const TitleBanner = styled.span`
+  background-color: #ffffff;
+  color: #1e3a8a;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  transform: rotate(-3deg);
+`;
+
 const CountryGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -32,10 +43,15 @@ const CountryGrid = styled.div`
 const CountryCard = styled.div`
   background-color: #ffffff;
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 2px solid #1e3a8a;
   transition: all 0.3s ease-in-out;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     transform: translateY(-5px) rotate(2deg);
@@ -46,24 +62,14 @@ const CountryCard = styled.div`
 const CountryTitle = styled.h2`
   font-size: 2rem;
   color: #1e3a8a;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 1rem 0;
+  text-align: center;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 `;
 
-const RecipeList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const RecipeItem = styled.li`
-  margin-bottom: 0.7rem;
-  color: #4b5563;
-  display: flex;
-  align-items: center;
-  font-size: 1.1rem;
+const CountryFlag = styled.span`
+  font-size: 5rem;
+  margin-bottom: 1rem;
 `;
 
 const float = keyframes`
@@ -111,96 +117,77 @@ const BigBen = styled.div`
 
 const europeanCountries = [
   {
-    name: "France",
-    flag: "🇫🇷",
-    recipes: [
-      "Coq au Vin",
-      "Ratatouille",
-      "Crème Brûlée",
-      "Quiche Lorraine",
-      "Bouillabaisse",
-    ],
+    name: "Italy",
+    displayName: "Italian Cuisine",
+    flag: "🇮🇹",
   },
   {
-    name: "Italy",
-    flag: "🇮🇹",
-    recipes: [
-      "Margherita Pizza",
-      "Spaghetti Carbonara",
-      "Risotto",
-      "Tiramisu",
-      "Osso Buco",
-    ],
+    name: "France",
+    displayName: "French Cuisine",
+    flag: "🇫🇷",
   },
   {
     name: "Spain",
+    displayName: "Spanish Cuisine",
     flag: "🇪🇸",
-    recipes: [
-      "Paella",
-      "Gazpacho",
-      "Tortilla Española",
-      "Churros",
-      "Patatas Bravas",
-    ],
   },
   {
     name: "Greece",
+    displayName: "Greek Cuisine",
     flag: "🇬🇷",
-    recipes: ["Moussaka", "Souvlaki", "Greek Salad", "Spanakopita", "Baklava"],
   },
 ];
 
 const Europe = () => {
   return (
-    <EuropeContainer
-      initial={{ opacity: 0, backgroundColor: "#456D1E" }}
-      animate={{ opacity: 1, backgroundColor: "#e0f2ff" }}
-      transition={{ duration: 0.5 }}
-    >
-      <Title>Tastes of Europe</Title>
+    <ContinentLayout backgroundColor="bg-[#e0f2ff]">
+      <EuropeContainer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Title>
+          <TitleBanner>Tastes of Europe</TitleBanner>
+        </Title>
 
-      <FloatingElement style={{ top: "5%", left: "5%" }}>
-        <Coffee size={48} color="#1e3a8a" />
-      </FloatingElement>
-      <FloatingElement style={{ top: "15%", right: "10%" }}>
-        <Umbrella size={36} color="#1e3a8a" />
-      </FloatingElement>
-      <FloatingElement style={{ bottom: "25%", left: "15%" }}>
-        <Camera size={42} color="#1e3a8a" />
-      </FloatingElement>
-      <FloatingElement style={{ bottom: "20%", right: "5%" }}>
-        <Compass size={40} color="#1e3a8a" />
-      </FloatingElement>
-      <FloatingElement style={{ top: "40%", left: "30%" }}>
-        <Globe size={38} color="#1e3a8a" />
-      </FloatingElement>
-      <FloatingElement style={{ top: "60%", right: "25%" }}>
-        <Map size={44} color="#1e3a8a" />
-      </FloatingElement>
+        {/* Increased the margin-bottom to create a bigger gap */}
+        <div className="mb-24"></div>
 
-      <EiffelTower />
-      <BigBen />
+        {/* Keep all floating elements */}
+        <FloatingElement style={{ top: "5%", left: "5%" }}>
+          <Coffee size={48} color="#1e3a8a" />
+        </FloatingElement>
+        <FloatingElement style={{ top: "15%", right: "10%" }}>
+          <Umbrella size={36} color="#1e3a8a" />
+        </FloatingElement>
+        <FloatingElement style={{ bottom: "25%", left: "15%" }}>
+          <Camera size={42} color="#1e3a8a" />
+        </FloatingElement>
+        <FloatingElement style={{ bottom: "20%", right: "5%" }}>
+          <Compass size={40} color="#1e3a8a" />
+        </FloatingElement>
+        <FloatingElement style={{ top: "40%", left: "30%" }}>
+          <Map size={38} color="#1e3a8a" />
+        </FloatingElement>
+        <FloatingElement style={{ top: "60%", right: "25%" }}>
+          <Globe size={44} color="#1e3a8a" />
+        </FloatingElement>
 
-      <CountryGrid>
-        {europeanCountries.map((country) => (
-          <Link to={`/${country.name}`} key={country.name}>
-            <CountryCard key={country.name}>
-              <CountryTitle>
-                {country.flag} {country.name}
-              </CountryTitle>
-              <RecipeList>
-                {country.recipes.map((recipe) => (
-                  <RecipeItem key={recipe}>
-                    <Coffee size={18} style={{ marginRight: "0.5rem" }} />
-                    {recipe}
-                  </RecipeItem>
-                ))}
-              </RecipeList>
-            </CountryCard>
-          </Link>
-        ))}
-      </CountryGrid>
-    </EuropeContainer>
+        <EiffelTower />
+        <BigBen />
+
+        <CountryGrid>
+          {europeanCountries.map((country) => (
+            <Link to={`/${country.name}`} key={country.name}>
+              <CountryCard>
+                <CountryFlag>{country.flag}</CountryFlag>
+                <CountryTitle>{country.displayName}</CountryTitle>
+              </CountryCard>
+            </Link>
+          ))}
+        </CountryGrid>
+      </EuropeContainer>
+    </ContinentLayout>
   );
 };
 

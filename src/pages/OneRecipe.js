@@ -180,13 +180,13 @@ const OneRecipe = () => {
 
           <h2 className="text-4xl font-semibold mb-6">Instructions:</h2>
           <p className="mb-8 text-xl">{recipe.description}</p>
-          <ol className="list-decimal list-outside ml-6 text-xl">
+          <ul className="list-disc list-outside ml-6 text-xl">
             {recipe.instructions?.map((step, index) => (
-              <li key={index} className="mb-6">
+              <li key={index} className="mb-4">
                 {step}
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
         <div className="flex items-center mt-8">
           <button

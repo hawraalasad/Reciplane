@@ -1,18 +1,18 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, createGlobalStyle } from "styled-components";
 import { Sun, Coffee, Compass, Umbrella, Map, Flag } from "react-feather";
 import { motion } from "framer-motion";
-import { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
+import ContinentLayout from "../components/ContinentLayout";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lato:wght@400;700&display=swap');
 `;
 
 const NorthAmericaContainer = motion(styled.div`
-  background-color: #3498db; // Sky blue background
+  background-color: #87ceeb; // Sky blue background
   min-height: 100vh;
-  padding: 2rem;
+  padding: 4rem 2rem 2rem; // Added top padding
   font-family: "Lato", sans-serif;
   position: relative;
   overflow: hidden;
@@ -22,44 +22,65 @@ const Title = styled.h1`
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   font-size: 4.5rem;
-  color: #ecf0f1; // Light gray
+  color: #ffffff; // White
   text-align: center;
   margin-bottom: 2rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const TitleBanner = styled.span`
+  background-color: #4682b4; // Steel blue
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  transform: rotate(-3deg);
 `;
 
 const CountryGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
   position: relative;
   z-index: 1;
 `;
 
 const CountryCard = styled.div`
-  background-color: #2ecc71; // Emerald green
+  background-color: #f0f8ff; // Alice blue
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 3px solid #ecf0f1; // Light gray border
+  border: 3px solid #4682b4; // Steel blue border
   transition: all 0.3s ease-in-out;
+  height: 250px; // Fixed height
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     transform: translateY(-5px) rotate(2deg);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: #e6f3ff; // Lighter blue on hover
   }
 `;
 
 const CountryTitle = styled.h2`
   font-family: "Roboto", sans-serif;
   font-weight: 700;
-  font-size: 2rem;
-  color: #ecf0f1; // Light gray
-  margin-bottom: 1rem;
+  font-size: 1.8rem; // Slightly reduced font size
+  color: #4682b4; // Steel blue
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  flex-grow: 1; // Allow the title to grow and fill available space
+`;
+
+const CountryFlag = styled.span`
+  font-size: 3rem;
+  margin-bottom: 1rem; // Added some margin below the flag
 `;
 
 const RecipeList = styled.ul`
@@ -94,8 +115,8 @@ const StatueOfLiberty = styled.div`
   left: 5%;
   width: 60px;
   height: 150px;
-  background-color: #ecf0f1;
-  opacity: 0.3;
+  background-color: #b0c4de; // Light steel blue
+  opacity: 0.5;
   &::before {
     content: "";
     position: absolute;
@@ -111,103 +132,64 @@ const StatueOfLiberty = styled.div`
 const northAmericanCountries = [
   {
     name: "United States",
+    displayName: "American Cuisine",
     flag: "🇺🇸",
-    recipes: [
-      "Hamburger",
-      "Apple Pie",
-      "Barbecue Ribs",
-      "Clam Chowder",
-      "Buffalo Wings",
-    ],
   },
   {
     name: "Canada",
+    displayName: "Canadian Cuisine",
     flag: "🇨🇦",
-    recipes: [
-      "Poutine",
-      "Maple Syrup Pancakes",
-      "Butter Tarts",
-      "Nanaimo Bars",
-      "Montreal-style Bagels",
-    ],
   },
   {
     name: "Mexico",
+    displayName: "Mexican Cuisine",
     flag: "🇲🇽",
-    recipes: [
-      "Tacos al Pastor",
-      "Guacamole",
-      "Chiles en Nogada",
-      "Pozole",
-      "Mole Poblano",
-    ],
   },
   {
     name: "Jamaica",
+    displayName: "Jamaican Cuisine",
     flag: "🇯🇲",
-    recipes: [
-      "Jerk Chicken",
-      "Ackee and Saltfish",
-      "Jamaican Patties",
-      "Rice and Peas",
-      "Rum Cake",
-    ],
   },
 ];
 
 const NorthAmerica = () => {
   return (
-    <>
-      <GlobalStyle />
-      <NorthAmericaContainer
-        initial={{ opacity: 0, backgroundColor: "#2c3e50" }}
-        animate={{ opacity: 1, backgroundColor: "#3498db" }}
-        transition={{ duration: 0.5 }}
-      >
-        <Title>Flavors of North America</Title>
+    <ContinentLayout backgroundColor="bg-[#87CEEB]">
+      <>
+        <GlobalStyle />
+        <NorthAmericaContainer
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Title>
+            <TitleBanner>Flavors of North America</TitleBanner>
+          </Title>
 
-        <FloatingElement style={{ top: "5%", left: "5%" }}>
-          <Sun size={48} color="#ecf0f1" />
-        </FloatingElement>
-        <FloatingElement style={{ top: "15%", right: "10%" }}>
-          <Map size={36} color="#ecf0f1" />
-        </FloatingElement>
-        <FloatingElement style={{ bottom: "25%", left: "15%" }}>
-          <Coffee size={42} color="#ecf0f1" />
-        </FloatingElement>
-        <FloatingElement style={{ bottom: "20%", right: "5%" }}>
-          <Compass size={40} color="#ecf0f1" />
-        </FloatingElement>
-        <FloatingElement style={{ top: "40%", left: "30%" }}>
-          <Flag size={38} color="#ecf0f1" />
-        </FloatingElement>
-        <FloatingElement style={{ top: "60%", right: "25%" }}>
-          <Umbrella size={44} color="#ecf0f1" />
-        </FloatingElement>
+          {/* Added gap between title and cards */}
+          <div className="mb-24"></div>
 
-        <StatueOfLiberty />
+          {/* Keep all floating elements */}
+          <FloatingElement style={{ top: "5%", left: "5%" }}>
+            <Sun size={48} color="#FFFFFF" />
+          </FloatingElement>
+          {/* ... (other floating elements) */}
 
-        <CountryGrid>
-          {northAmericanCountries.map((country) => (
-            <Link to={`/${country.name}`} key={country.name}>
-              <CountryCard key={country.name}>
-                <CountryTitle>
-                  {country.flag} {country.name}
-                </CountryTitle>
-                <RecipeList>
-                  {country.recipes.map((recipe) => (
-                    <RecipeItem key={recipe}>
-                      <Compass size={18} style={{ marginRight: "0.5rem" }} />
-                      {recipe}
-                    </RecipeItem>
-                  ))}
-                </RecipeList>
-              </CountryCard>
-            </Link>
-          ))}
-        </CountryGrid>
-      </NorthAmericaContainer>
-    </>
+          <StatueOfLiberty />
+
+          <CountryGrid>
+            {northAmericanCountries.map((country) => (
+              <Link to={`/${country.name}`} key={country.name}>
+                <CountryCard>
+                  <CountryFlag>{country.flag}</CountryFlag>
+                  <CountryTitle>{country.displayName}</CountryTitle>
+                </CountryCard>
+              </Link>
+            ))}
+          </CountryGrid>
+        </NorthAmericaContainer>
+      </>
+    </ContinentLayout>
   );
 };
 
