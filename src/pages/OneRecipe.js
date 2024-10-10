@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { getRecipe, updateRecipe } from "../api/recipes";
+import { getRecipe, updateRecipe, toggleLike } from "../api/recipes";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
+import { getMyProfile } from "../api/auth";
 const EditRecipeModal = ({ isOpen, onClose, recipe, onUpdate }) => {
   const [editedRecipe, setEditedRecipe] = useState(recipe);
 
@@ -81,6 +81,7 @@ const OneRecipe = () => {
   const { recipeId } = useParams();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const queryClient = useQueryClient();
+
   const {
     data: recipe,
     isLoading,
@@ -91,6 +92,21 @@ const OneRecipe = () => {
     queryFn: () => getRecipe(recipeId),
   });
 
+  const { data: profile, error: profileError } = useQuery({
+    queryKey: ["profile"],
+    queryFn: getMyProfile,
+  });
+
+  const [localLiked, setLocalLiked] = useState(false);
+  const [localLikes, setLocalLikes] = useState(0);
+
+  useEffect(() => {
+    if (recipe) {
+      setLocalLiked(recipe.isLiked);
+      setLocalLikes(recipe.likes);
+    }
+  }, [recipe]);
+
   const updateRecipeMutation = useMutation({
     mutationFn: (updatedRecipe) => updateRecipe(recipeId, updatedRecipe),
     onSuccess: () => {
@@ -100,6 +116,28 @@ const OneRecipe = () => {
 
   const handleUpdateRecipe = (updatedRecipe) => {
     updateRecipeMutation.mutate(updatedRecipe);
+  };
+
+  const likeRecipeMutation = useMutation({
+    mutationFn: () => toggleLike(recipeId),
+    onMutate: () => {
+      // Optimistically update UI
+      setLocalLiked(!localLiked);
+      setLocalLikes(localLiked ? localLikes - 1 : localLikes + 1);
+    },
+    onError: () => {
+      // Revert local state if the server request fails
+      setLocalLiked(!localLiked);
+      setLocalLikes(localLiked ? localLikes + 1 : localLikes - 1);
+    },
+    onSettled: () => {
+      // Refetch the recipe data to ensure we have the latest state
+      queryClient.invalidateQueries(["recipe", recipeId]);
+    },
+  });
+
+  const handleLikeRecipe = () => {
+    likeRecipeMutation.mutate();
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -149,6 +187,45 @@ const OneRecipe = () => {
               </li>
             ))}
           </ol>
+        </div>
+        <div className="flex items-center mt-8">
+          <button
+            className={`flex items-center ${
+              recipe.likedBy.includes(profile?._id)
+                ? "text-red-500"
+                : "text-gray-500"
+            } hover:text-red-500 transition-colors duration-200`}
+            onClick={handleLikeRecipe}
+            disabled={likeRecipeMutation.isLoading}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              stroke="currentColor"
+              class={`w-6 h-6 transition-all duration-300 ease-in-out mr-1 hover:scale-110 ${
+                recipe.likedBy.includes(profile?._id)
+                  ? "text-red-500"
+                  : "text-gray-500"
+              }`}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              ></path>
+            </svg>
+
+            <p
+              className={`${
+                recipe.likedBy.length === 1 ? "text-red-500" : "text-gray-500"
+              }`}
+            >
+              {recipe.likedBy.length}{" "}
+              {recipe.likedBy.length === 1 ? "Like" : "Likes"}
+            </p>
+          </button>
         </div>
       </div>
       <button
