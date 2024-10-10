@@ -43,14 +43,10 @@ const deleteRecipe = async (recipeId) => {
 };
 
 // Add these new functions
-const likeRecipe = async (recipeId) => {
-  try {
-    const response = await instance.post(`/recipes/${recipeId}/like`);
-    return response.data;
-  } catch (error) {
-    console.error("Error liking recipe:", error);
-    throw error;
-  }
+const toggleLike = async (recipeId) => {
+  const { data } = await instance.post(`/recipes/Like/${recipeId}`);
+  console.log(data);
+  return data;
 };
 
 const rateRecipe = async (recipeId, rating) => {
@@ -71,14 +67,13 @@ const getRecipesByCountry = async (country) => {
   return data;
 };
 
-
 export {
   getAllRecipes,
   createRecipe,
   updateRecipe,
   deleteRecipe,
   getRecipe,
-  likeRecipe,
+  toggleLike,
   rateRecipe,
   getRecipesByCountry,
 };

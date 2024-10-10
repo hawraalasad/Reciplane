@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getRecipe, updateRecipe } from "../api/recipes";
+import { getRecipe, updateRecipe, toggleLike } from "../api/recipes";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const EditRecipeModal = ({ isOpen, onClose, recipe, onUpdate }) => {
@@ -81,6 +81,7 @@ const OneRecipe = () => {
   const { recipeId } = useParams();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const queryClient = useQueryClient();
+
   const {
     data: recipe,
     isLoading,
@@ -100,6 +101,17 @@ const OneRecipe = () => {
 
   const handleUpdateRecipe = (updatedRecipe) => {
     updateRecipeMutation.mutate(updatedRecipe);
+  };
+
+  const likeRecipeMutation = useMutation({
+    mutationFn: () => toggleLike(recipeId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["recipe", recipeId]);
+    },
+  });
+
+  const handleLikeRecipe = () => {
+    likeRecipeMutation.mutate();
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -149,6 +161,31 @@ const OneRecipe = () => {
               </li>
             ))}
           </ol>
+        </div>
+        <div className="flex items-center mt-8">
+          <button
+            className={`flex items-center ${
+              recipe.isLiked ? "text-red-500" : "text-gray-500"
+            } hover:text-red-500 transition-colors duration-200`}
+            onClick={handleLikeRecipe}
+            disabled={likeRecipeMutation.isLoading}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mr-2"
+              fill={recipe.isLiked ? "currentColor" : "none"}
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+            {recipe.likes} {recipe.likes === 1 ? "Like" : "Likes"}
+          </button>
         </div>
       </div>
       <button

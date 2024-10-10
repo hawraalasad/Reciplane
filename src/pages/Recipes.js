@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getAllRecipes } from "../api/recipes";
+import { getAllRecipes, toggleLike } from "../api/recipes";
+
 import {
   MapPin,
   Compass,
@@ -10,17 +11,20 @@ import {
   Filter,
   Search,
   ChevronDown,
+  Heart,
 } from "react-feather";
 import AddRecipe from "../components/AddRecipe";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const Recipes = () => {
   const [isAddRecipeOpen, setIsAddRecipeOpen] = useState(false);
   const [user] = useContext(UserContext);
   const [selectedCountry, setSelectedCountry] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedIngredient, setSelectedIngredient] = useState("All");
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
 
   const {
     data: recipes,
@@ -48,11 +52,12 @@ const Recipes = () => {
     ...new Set(recipes?.map((recipe) => recipe.country.name) || []),
   ];
 
-  const ingredients = [
-    "All",
+  const ingredientOptions = [
+    { value: "All", label: "All" },
     ...new Set(
-      recipes?.flatMap((recipe) => recipe.ingredients.map((ing) => ing.name)) ||
-        []
+      recipes?.flatMap((recipe) =>
+        recipe.ingredients.map((ing) => ({ value: ing.name, label: ing.name }))
+      ) || []
     ),
   ];
 
@@ -63,12 +68,27 @@ const Recipes = () => {
     )
     .filter(
       (recipe) =>
-        selectedIngredient === "All" ||
-        recipe.ingredients.some((ing) => ing.name === selectedIngredient)
+        !selectedIngredient ||
+        selectedIngredient.value === "All" ||
+        recipe.ingredients.some((ing) => ing.name === selectedIngredient.value)
     )
     .filter((recipe) =>
       recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+  const queryClient = useQueryClient();
+
+  const likeMutation = useMutation({
+    mutationFn: (recipeId) => toggleLike(recipeId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["recipes"]);
+    },
+  });
+
+  const handleLike = (e, recipeId) => {
+    e.stopPropagation();
+    likeMutation.mutate(recipeId);
+  };
 
   return (
     <div className="bg-gradient-to-b from-[#37B0E6] to-[#84B850] min-h-screen p-8 relative overflow-hidden">
@@ -99,19 +119,24 @@ const Recipes = () => {
               ))}
             </select>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center w-64">
             <ChevronDown className="mr-2 text-white" />
-            <select
+            <Select
               value={selectedIngredient}
-              onChange={(e) => setSelectedIngredient(e.target.value)}
-              className="bg-white text-[#37B0E6] px-4 py-2 rounded-full hover:bg-yellow-300 hover:text-white transition-colors duration-300 font-bold shadow-lg"
-            >
-              {ingredients.map((ingredient) => (
-                <option key={ingredient} value={ingredient}>
-                  {ingredient}
-                </option>
-              ))}
-            </select>
+              onChange={setSelectedIngredient}
+              options={ingredientOptions}
+              placeholder="Select ingredient..."
+              className="w-full"
+              classNamePrefix="react-select"
+              theme={(theme) => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  primary: "#37B0E6",
+                  primary25: "#e6f7ff",
+                },
+              })}
+            />
           </div>
           <div className="flex items-center bg-white rounded-full px-4 py-2 shadow-lg">
             <Search className="text-[#37B0E6] mr-2" />
@@ -154,24 +179,24 @@ const Recipes = () => {
               alt={recipe.name}
               className="w-full h-80 object-cover rounded-md mb-4"
             />
-            <p className="text-gray-600 mb-4 flex items-center">
-              <MapPin className="mr-2 text-green-500" /> Origin:{" "}
-              {recipe.country.name}
-            </p>
-            <div className="mb-4">
-              <h3 className="text-lg text-gray-800 font-semibold mb-2 flex items-center">
-                <Compass className="mr-2 text-yellow-500" /> Ingredients:
-              </h3>
-              <ul className="list-disc list-inside text-gray-600">
-                {recipe.ingredients.map((ingredient, index) => (
-                  <li
-                    key={index}
-                    className="mb-1 hover:text-blue-500 transition-colors duration-200"
-                  >
-                    {ingredient.name}
-                  </li>
-                ))}
-              </ul>
+            <div className="mt-auto flex items-center justify-between">
+              <p className="text-gray-600 flex items-center">
+                <MapPin className="mr-2 text-green-500" /> Origin:{" "}
+                {recipe.country.name}
+              </p>
+              <button
+                onClick={(e) => handleLike(e, recipe._id)}
+                className={`flex items-center ${
+                  recipe.isLiked ? "text-red-500" : "text-gray-500"
+                } hover:text-red-500 transition-colors duration-200`}
+                disabled={likeMutation.isLoading}
+              >
+                <Heart
+                  className={`mr-1 ${recipe.isLiked ? "fill-current" : ""}`}
+                  size={20}
+                />
+                <span>{recipe.likes}</span>
+              </button>
             </div>
           </div>
         ))}
