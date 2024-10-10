@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { getRecipe, updateRecipe, toggleLike } from "../api/recipes";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
+import { getMyProfile } from "../api/auth";
 const EditRecipeModal = ({ isOpen, onClose, recipe, onUpdate }) => {
   const [editedRecipe, setEditedRecipe] = useState(recipe);
 
@@ -90,6 +90,11 @@ const OneRecipe = () => {
   } = useQuery({
     queryKey: ["recipe", recipeId],
     queryFn: () => getRecipe(recipeId),
+  });
+
+  const { data: profile, error: profileError } = useQuery({
+    queryKey: ["profile"],
+    queryFn: getMyProfile,
   });
 
   const [localLiked, setLocalLiked] = useState(false);
@@ -186,26 +191,40 @@ const OneRecipe = () => {
         <div className="flex items-center mt-8">
           <button
             className={`flex items-center ${
-              localLiked ? "text-red-500" : "text-gray-500"
+              recipe.likedBy.includes(profile?._id)
+                ? "text-red-500"
+                : "text-gray-500"
             } hover:text-red-500 transition-colors duration-200`}
             onClick={handleLikeRecipe}
             disabled={likeRecipeMutation.isLoading}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 mr-2"
-              fill={localLiked ? "currentColor" : "none"}
               viewBox="0 0 24 24"
+              fill="currentColor"
               stroke="currentColor"
+              class={`w-6 h-6 transition-all duration-300 ease-in-out mr-1 hover:scale-110 ${
+                recipe.likedBy.includes(profile?._id)
+                  ? "text-red-500"
+                  : "text-gray-500"
+              }`}
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
+              ></path>
             </svg>
-            {localLikes} {localLikes === 1 ? "Like" : "Likes"}
+
+            <p
+              className={`${
+                recipe.likedBy.length === 1 ? "text-red-500" : "text-gray-500"
+              }`}
+            >
+              {recipe.likedBy.length}{" "}
+              {recipe.likedBy.length === 1 ? "Like" : "Likes"}
+            </p>
           </button>
         </div>
       </div>
