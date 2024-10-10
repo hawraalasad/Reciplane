@@ -145,8 +145,13 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
         >
           <X size={24} />
         </motion.button>
+<<<<<<< HEAD
         <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center">
           Add New Recipe
+=======
+        <h2 className="text-4xl font-bold text-white mb-8 text-center font-adventure">
+          Create Your Recipe
+>>>>>>> origin/main
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
