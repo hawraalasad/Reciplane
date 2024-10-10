@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState, useContext, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAllRecipes, toggleLike } from "../api/recipes";
-
+import { getMyProfile } from "../api/auth";
 import {
   MapPin,
   Compass,
@@ -17,7 +17,6 @@ import AddRecipe from "../components/AddRecipe";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const Recipes = () => {
   const [isAddRecipeOpen, setIsAddRecipeOpen] = useState(false);
@@ -25,21 +24,28 @@ const Recipes = () => {
   const [selectedCountry, setSelectedCountry] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState(null);
-
-  const {
-    data: recipes,
-    isLoading,
-    isError,
-  } = useQuery({
+  const [likedRecipes, setLikedRecipes] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["recipes"],
     queryFn: getAllRecipes,
   });
-
-  console.log(recipes);
+  const { data: profile, error } = useQuery({
+    queryKey: ["profile"],
+    queryFn: getMyProfile,
+  });
+  useEffect(() => {
+    if (data) {
+      setRecipes(data);
+    }
+    if (profile) {
+      setLikedRecipes(profile.likedRecipes.map((recipe) => recipe._id));
+    }
+  }, [data, profile]);
   const handleAddRecipeClick = () => {
     setIsAddRecipeOpen(true);
   };
-
+  console.log(likedRecipes);
   const navigate = useNavigate();
 
   const handleRecipeClick = (recipeId) => {
@@ -79,13 +85,14 @@ const Recipes = () => {
   const queryClient = useQueryClient();
 
   const likeMutation = useMutation({
-    mutationFn: (recipeId) => toggleLike(recipeId),
-    onSuccess: () => {
+    mutationFn: toggleLike,
+    onSuccess: (data, recipeId) => {
       queryClient.invalidateQueries(["recipes"]);
     },
   });
 
   const handleLike = (e, recipeId) => {
+    setLikedRecipes([...likedRecipes, recipeId]);
     e.stopPropagation();
     likeMutation.mutate(recipeId);
   };
@@ -162,7 +169,7 @@ const Recipes = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredRecipes?.map((recipe) => (
           <div
-            key={recipe.id}
+            key={recipe._id}
             className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500 cursor-pointer flex flex-col"
             onClick={() => handleRecipeClick(recipe._id)}
           >
@@ -186,16 +193,42 @@ const Recipes = () => {
               </p>
               <button
                 onClick={(e) => handleLike(e, recipe._id)}
-                className={`flex items-center ${
-                  recipe.isLiked ? "text-red-500" : "text-gray-500"
-                } hover:text-red-500 transition-colors duration-200`}
+                className={
+                  likedRecipes.includes(recipe._id)
+                    ? "text-red-500"
+                    : "text-gray-400 hover:text-red-500"
+                }
                 disabled={likeMutation.isLoading}
               >
-                <Heart
-                  className={`mr-1 ${recipe.isLiked ? "fill-current" : ""}`}
-                  size={20}
-                />
-                <span>{recipe.likes}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill={
+                    likedRecipes.includes(recipe._id) ? "currentColor" : "none"
+                  }
+                  stroke="currentColor"
+                  className={`w-6 h-6 transition-all duration-300 ease-in-out mr-1 hover:scale-110 ${
+                    likedRecipes.includes(recipe._id)
+                      ? "text-red-500"
+                      : "text-gray-400 hover:text-red-500"
+                  }`}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+                <span
+                  className={`${
+                    likedRecipes.includes(recipe._id)
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }`}
+                >
+                  {recipe.likedBy.length}
+                </span>
               </button>
             </div>
           </div>
