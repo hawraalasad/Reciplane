@@ -2,9 +2,21 @@ import React, { useState, useEffect } from "react";
 import { continents } from "../continents";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useNavigate } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 import airplaneImage from "../media/airplane.png";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  GiCookingPot,
+  GiKnifeFork,
+  GiCupcake,
+  GiGloves,
+  GiCoffeeCup,
+  GiWineGlass,
+  GiChopsticks,
+  GiNoodles,
+  GiPizzaSlice,
+  GiFruitBowl,
+} from "react-icons/gi";
 
 const CustomCursor = createGlobalStyle`
   .plane-cursor {
@@ -20,13 +32,12 @@ const MapContainer = styled.div`
   border-radius: 1.5rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  transform: rotate(0deg);
   transition: all 300ms;
   z-index: 10;
   position: relative;
 
   &:hover {
-    transform: rotate(1deg);
+    transform: scale(1.05); // Scale up by 5% on hover
   }
 `;
 
@@ -46,8 +57,61 @@ const ExpandingSVG = styled(motion.svg)`
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 9999; // Increase this value
+  z-index: 10000; // Increased to be higher than the navbar
   pointer-events: none;
+`;
+
+const continentColors = {
+  Asia: "#fff7ed",
+  Africa: "#f0c300",
+  Europe: "#e0f2ff",
+  NorthAmerica: "#87ceeb",
+  SouthAmerica: "#84B850",
+  Australia: "#FFD700",
+  Antarctica: "#FFFFFF",
+};
+
+const CookingIcon = styled(motion.div)`
+  position: relative;
+  font-size: ${(props) => props.size || "60px"}; // Increased default size
+  color: white;
+  cursor: pointer;
+  overflow: visible;
+`;
+
+const steamAnimation = keyframes`
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-70px) translateX(-30px) scale(2);
+    opacity: 0;
+  }
+`;
+
+const Steam = styled.div`
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: ${steamAnimation} 4s ease-out infinite;
+`;
+
+const GradientBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, #37b0e6, #84b850);
+  z-index: -1;
 `;
 
 const Home = () => {
@@ -55,6 +119,7 @@ const Home = () => {
   const [isOverMap, setIsOverMap] = useState(false);
   const [expandingContinent, setExpandingContinent] = useState(null);
   const navigate = useNavigate();
+  const [isHoveringPot, setIsHoveringPot] = useState(false);
 
   const handleMouseMove = (e) => {
     setCursorPosition({ x: e.clientX, y: e.clientY });
@@ -72,57 +137,81 @@ const Home = () => {
 
   const handleContinentClick = (continent, event) => {
     const path = event.target;
-    const svgBoundingRect = path.ownerSVGElement.getBoundingClientRect();
-    const pathBoundingRect = path.getBoundingClientRect();
+    const svgElement = path.ownerSVGElement;
+    const viewBox = svgElement.viewBox.baseVal;
+    const svgWidth = viewBox.width;
+    const svgHeight = viewBox.height;
 
-    const centerX =
-      (pathBoundingRect.left + pathBoundingRect.right) / 2 -
-      svgBoundingRect.left;
-    const centerY =
-      (pathBoundingRect.top + pathBoundingRect.bottom) / 2 -
-      svgBoundingRect.top;
+    const bbox = path.getBBox();
+    const centerX = bbox.x + bbox.width;
+    const centerY = bbox.y + bbox.height / 2;
+
+    let translateX = svgWidth / 2 - centerX;
+    let translateY = svgHeight / 2 - centerY;
+    console.log(translateX);
+
+    if (continent === "Asia") {
+      translateX = -12000;
+    }
 
     setExpandingContinent({
       continent,
       path: path.getAttribute("d"),
-      centerX,
-      centerY,
-      clickX: event.clientX,
-      clickY: event.clientY,
+      translateX,
+      translateY,
     });
 
     setTimeout(() => {
       navigate(`/${continent}`);
-    }, 1000); // Reduced from 1500 to 1000
+    }, 800);
   };
 
   return (
     <motion.div
-      className="flex-grow flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-[#37B0E6] to-[#84B850] relative overflow-hidden p-4"
+      className="flex flex-col justify-center items-center min-h-screen relative overflow-hidden p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <GradientBackground />
       <CustomCursor />
       <PlaneCursor
         src={airplaneImage}
         alt="Airplane cursor"
         style={{
           left: `${cursorPosition.x}px`,
-          top: `${cursorPosition.y - 15}px`, // Offset by half the height
+          top: `${cursorPosition.y - 15}px`,
           display: isOverMap ? "block" : "none",
         }}
       />
-      {/* Decorative elements */}
-      <div className="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full animate-bounce"></div>
-      <div className="absolute bottom-10 right-10 w-16 h-16 bg-pink-400 rounded-full animate-pulse"></div>
-      <div className="absolute top-1/4 right-1/4 w-12 h-12 bg-green-300 rotate-45 animate-spin"></div>
-      <div className="absolute bottom-1/4 left-1/4 w-24 h-24 bg-purple-400 rounded-tl-3xl rounded-br-3xl animate-wiggle"></div>
-      <div className="absolute top-1/3 right-1/3 w-16 h-16 bg-red-400 rounded-full animate-float"></div>
 
-      <h1 className="text-5xl font-bold text-white mb-8 animate-pulse z-10">
-        Explore the Culinary World!
-      </h1>
+      <div className="flex items-center mb-8 w-full max-w-4xl">
+        <CookingIcon
+          className="mr-4 flex-shrink-0"
+          size="120px"
+          animate={{ y: [0, -5, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          onMouseEnter={() => setIsHoveringPot(true)}
+          onMouseLeave={() => setIsHoveringPot(false)}
+        >
+          <GiCookingPot />
+          {isHoveringPot && (
+            <>
+              <Steam style={{ left: "20%", animationDelay: "0s" }} />
+              <Steam style={{ left: "35%", animationDelay: "0.6s" }} />
+              <Steam style={{ left: "50%", animationDelay: "1.2s" }} />
+              <Steam style={{ left: "65%", animationDelay: "1.8s" }} />
+              <Steam style={{ left: "80%", animationDelay: "2.4s" }} />
+            </>
+          )}
+        </CookingIcon>
+
+        <div className="flex-grow flex justify-center">
+          <h1 className="text-5xl font-bold text-white animate-pulse z-10 text-center max-w-2xl">
+            Explore Recipes from All Over the World!
+          </h1>
+        </div>
+      </div>
 
       <MapContainer
         className="plane-cursor"
@@ -170,10 +259,6 @@ const Home = () => {
         Click on a continent to discover its flavors!
       </div>
 
-      {/* Additional decorative elements */}
-      <div className="absolute top-20 left-20 w-12 h-12 bg-blue-400 transform rotate-45 animate-pulse"></div>
-      <div className="absolute bottom-20 right-20 w-20 h-20 bg-orange-400 rounded-tr-3xl rounded-bl-3xl animate-bounce"></div>
-
       <AnimatePresence>
         {expandingContinent && (
           <ExpandingSVG
@@ -184,17 +269,16 @@ const Home = () => {
               <clipPath id="expanding-clip">
                 <motion.path
                   d={expandingContinent.path}
-                  initial={{
-                    scale: 0,
-                    x: expandingContinent.clickX - expandingContinent.centerX,
-                    y: expandingContinent.clickY - expandingContinent.centerY,
-                  }}
+                  initial={{ scale: 1, x: 0, y: 0 }}
                   animate={{
-                    scale: 200,
-                    x: 0,
-                    y: 0,
+                    scale: 50, // Increased scale for faster zoom
+                    x: expandingContinent.translateX,
+                    y: expandingContinent.translateY,
                   }}
-                  transition={{ duration: 1, ease: "easeInOut" }} // Reduced from 1.5 to 1
+                  transition={{
+                    duration: 0.8, // Reduced duration
+                    ease: "easeInOut",
+                  }}
                 />
               </clipPath>
             </defs>
@@ -203,12 +287,10 @@ const Home = () => {
               y="0"
               width={window.innerWidth}
               height={window.innerHeight}
-              fill="#456D1E"
               clipPath="url(#expanding-clip)"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+              initial={{ fill: "#456D1E" }}
+              animate={{ fill: continentColors[expandingContinent.continent] }}
+              transition={{ duration: 0.8, ease: "easeInOut" }} // Reduced duration
             />
           </ExpandingSVG>
         )}

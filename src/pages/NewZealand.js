@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { getRecipesByCountry } from "../api/recipes";
 import { useQuery } from "@tanstack/react-query";
+import ContinentLayout from "../components/ContinentLayout";
 
 const NewZealand = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const NewZealand = () => {
     return <div>No recipes available for this country.</div>;
 
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
+    <ContinentLayout backgroundColor="bg-gray-100">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">
           Recipes from {recipes[0].country.name}
@@ -50,7 +51,7 @@ const NewZealand = () => {
           ))}
         </div>
       </div>
-    </div>
+    </ContinentLayout>
   );
 };
 

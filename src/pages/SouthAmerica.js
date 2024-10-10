@@ -1,9 +1,9 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, createGlobalStyle } from "styled-components";
 import { Sun, Music, Coffee, Feather, Umbrella, Smile } from "react-feather";
 import { motion } from "framer-motion";
-import { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
+import ContinentLayout from "../components/ContinentLayout";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
 const SouthAmericaContainer = motion(styled.div`
   background-color: #1a5f7a; // Deep teal background
   min-height: 100vh;
-  padding: 2rem;
+  padding: 4rem 2rem 2rem; // Added top padding
   font-family: "Open Sans", sans-serif;
   position: relative;
   overflow: hidden;
@@ -119,86 +119,79 @@ const ChristRedeemer = styled.div`
   }
 `;
 
+const CountryFlag = styled.span`
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+`;
+
 const southAmericanCountries = [
   {
     name: "Peru",
+    displayName: "Peruvian Cuisine",
     flag: "🇵🇪",
-    recipes: [
-      "Ceviche",
-      "Lomo Saltado",
-      "Aji de Gallina",
-      "Causa Rellena",
-      "Anticuchos",
-    ],
   },
   {
     name: "Argentina",
+    displayName: "Argentinian Cuisine",
     flag: "🇦🇷",
-    recipes: ["Asado", "Empanadas", "Locro", "Choripán", "Dulce de Leche"],
   },
   {
     name: "Brazil",
+    displayName: "Brazilian Cuisine",
     flag: "🇧🇷",
-    recipes: ["Feijoada", "Pão de Queijo", "Moqueca", "Brigadeiro", "Acarajé"],
   },
   {
     name: "Colombia",
+    displayName: "Colombian Cuisine",
     flag: "🇨🇴",
-    recipes: ["Bandeja Paisa", "Ajiaco", "Arepa", "Sancocho", "Lechona"],
   },
 ];
 
 const SouthAmerica = () => {
   return (
-    <SouthAmericaContainer
-      initial={{ opacity: 0, backgroundColor: "#456D1E" }}
-      animate={{ opacity: 1, backgroundColor: "#1a5f7a" }}
-      transition={{ duration: 0.5 }}
-    >
-      <Title>Flavors of South America</Title>
+    <ContinentLayout backgroundColor="bg-[#1a5f7a]">
+      <SouthAmericaContainer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Title>Flavors of South America</Title>
 
-      <FloatingElement style={{ top: "5%", left: "5%" }}>
-        <Sun size={48} color="#ffd166" />
-      </FloatingElement>
-      <FloatingElement style={{ top: "15%", right: "10%" }}>
-        <Music size={36} color="#ffd166" />
-      </FloatingElement>
-      <FloatingElement style={{ bottom: "25%", left: "15%" }}>
-        <Coffee size={42} color="#ffd166" />
-      </FloatingElement>
-      <FloatingElement style={{ bottom: "20%", right: "5%" }}>
-        <Feather size={40} color="#ffd166" />
-      </FloatingElement>
-      <FloatingElement style={{ top: "40%", left: "30%" }}>
-        <Umbrella size={38} color="#ffd166" />
-      </FloatingElement>
-      <FloatingElement style={{ top: "60%", right: "25%" }}>
-        <Smile size={44} color="#ffd166" />
-      </FloatingElement>
+        {/* Keep all floating elements */}
+        <FloatingElement style={{ top: "5%", left: "5%" }}>
+          <Sun size={48} color="#ffd166" />
+        </FloatingElement>
+        <FloatingElement style={{ top: "15%", right: "10%" }}>
+          <Music size={36} color="#ffd166" />
+        </FloatingElement>
+        <FloatingElement style={{ bottom: "25%", left: "15%" }}>
+          <Coffee size={42} color="#ffd166" />
+        </FloatingElement>
+        <FloatingElement style={{ bottom: "20%", right: "5%" }}>
+          <Feather size={40} color="#ffd166" />
+        </FloatingElement>
+        <FloatingElement style={{ top: "40%", left: "30%" }}>
+          <Umbrella size={38} color="#ffd166" />
+        </FloatingElement>
+        <FloatingElement style={{ top: "60%", right: "25%" }}>
+          <Smile size={44} color="#ffd166" />
+        </FloatingElement>
 
-      <MachuPicchu />
-      <ChristRedeemer />
+        <MachuPicchu />
+        <ChristRedeemer />
 
-      <CountryGrid>
-        {southAmericanCountries.map((country) => (
-          <Link to={`/region/${country.name}`} key={country.name}>
-            <CountryCard key={country.name}>
-              <CountryTitle>
-                {country.flag} {country.name}
-              </CountryTitle>
-              <RecipeList>
-                {country.recipes.map((recipe) => (
-                  <RecipeItem key={recipe}>
-                    <Coffee size={18} style={{ marginRight: "0.5rem" }} />
-                    {recipe}
-                  </RecipeItem>
-                ))}
-              </RecipeList>
-            </CountryCard>
-          </Link>
-        ))}
-      </CountryGrid>
-    </SouthAmericaContainer>
+        <CountryGrid>
+          {southAmericanCountries.map((country) => (
+            <Link to={`/${country.name}`} key={country.name}>
+              <CountryCard>
+                <CountryFlag>{country.flag}</CountryFlag>
+                <CountryTitle>{country.displayName}</CountryTitle>
+              </CountryCard>
+            </Link>
+          ))}
+        </CountryGrid>
+      </SouthAmericaContainer>
+    </ContinentLayout>
   );
 };
 

@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
 const OceaniaContainer = motion(styled.div`
   background-color: #ffa07a; // Light salmon
   min-height: 100vh;
-  padding: 2rem;
+  padding: 4rem 2rem 2rem; // Added top padding
   font-family: "Quicksand", sans-serif;
   position: relative;
   overflow: hidden;
@@ -98,38 +98,31 @@ const SydneyOperaHouse = styled.div`
   clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
 `;
 
+const CountryFlag = styled.span`
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+`;
+
 const OceanianCountries = [
   {
     name: "Australia",
+    displayName: "Australian Cuisine",
     flag: "🇦🇺",
-    recipes: [
-      "Meat Pie",
-      "Vegemite on Toast",
-      "Pavlova",
-      "Lamingtons",
-      "Barramundi",
-    ],
   },
   {
     name: "New Zealand",
+    displayName: "New Zealand Cuisine",
     flag: "🇳🇿",
-    recipes: [
-      "Hangi",
-      "Lamb Roast",
-      "Hokey Pokey Ice Cream",
-      "Whitebait Fritters",
-      "Pavlova",
-    ],
   },
   {
     name: "Fiji",
+    displayName: "Fijian Cuisine",
     flag: "🇫🇯",
-    recipes: ["Kokoda", "Lovo", "Rourou", "Cassava Cake", "Duruka"],
   },
   {
     name: "Papua New Guinea",
+    displayName: "Papua New Guinean Cuisine",
     flag: "🇵🇬",
-    recipes: ["Mumu", "Sago", "Kaukau", "Kokoda", "Aibika"],
   },
 ];
 
@@ -168,18 +161,9 @@ const Oceania = () => {
         <CountryGrid>
           {OceanianCountries.map((country) => (
             <Link to={`/${country.name}`} key={country.name}>
-              <CountryCard key={country.name}>
-                <CountryTitle>
-                  {country.flag} {country.name}
-                </CountryTitle>
-                <RecipeList>
-                  {country.recipes.map((recipe) => (
-                    <RecipeItem key={recipe}>
-                      <Sun size={18} style={{ marginRight: "0.5rem" }} />
-                      {recipe}
-                    </RecipeItem>
-                  ))}
-                </RecipeList>
+              <CountryCard>
+                <CountryFlag>{country.flag}</CountryFlag>
+                <CountryTitle>{country.displayName}</CountryTitle>
               </CountryCard>
             </Link>
           ))}

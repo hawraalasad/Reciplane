@@ -5,14 +5,14 @@ import { logout } from "../api/auth";
 import UserContext from "../context/UserContext";
 
 const continentColors = {
-  "/": { bg: "bg-[#37B0E6]", button: "bg-white text-[#37B0E6]" },
-  "/Asia": { bg: "bg-[#fff7ed]", button: "bg-[#e63946] text-white" },
-  "/Africa": { bg: "bg-[#f0c300]", button: "bg-[#016450] text-[#f0c300]" },
-  "/Europe": { bg: "bg-[#e0f2ff]", button: "bg-[#1e3a8a] text-white" },
-  "/NorthAmerica": { bg: "bg-[#FF0000]", button: "bg-white text-[#FF0000]" },
-  "/SouthAmerica": { bg: "bg-[#00FF00]", button: "bg-black text-[#00FF00]" },
-  "/Australia": { bg: "bg-[#FFD700]", button: "bg-black text-[#FFD700]" },
-  "/Antarctica": { bg: "bg-[#FFFFFF]", button: "bg-[#87CEEB] text-white" },
+  "/": { button: "bg-white text-[#37B0E6]" },
+  "/Asia": { button: "bg-[#e63946] text-white" },
+  "/Africa": { button: "bg-[#016450] text-[#f0c300]" },
+  "/Europe": { button: "bg-[#1e3a8a] text-white" },
+  "/NorthAmerica": { button: "bg-white text-[#FF0000]" },
+  "/SouthAmerica": { button: "bg-black text-[#00FF00]" },
+  "/Australia": { button: "bg-black text-[#FFD700]" },
+  "/Antarctica": { button: "bg-[#87CEEB] text-white" },
 };
 
 const NavBar = () => {
@@ -37,7 +37,7 @@ const NavBar = () => {
 
   return (
     <motion.nav
-      className={`backdrop-blur-md flex justify-center items-center hp-font z-[9999] px-4 py-2 ${currentColors.bg}`}
+      className="flex justify-center items-center hp-font z-[9998] px-4 py-2 absolute top-0 left-0 right-0"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

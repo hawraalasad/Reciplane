@@ -3,20 +3,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createRecipe } from "../api/recipes";
 import Select from "react-select";
 import countryList from "../data/countries";
-import ingredients from "../data/ingredients";
-import {
-  MapPin,
-  Compass,
-  FileText,
-  Anchor,
-  X,
-  Image,
-  Plus,
-} from "react-feather";
+import { MapPin, Compass, FileText, X, Image } from "react-feather";
 import continents from "../data/continents";
 import { motion } from "framer-motion";
 import { Utensils, List } from "lucide-react";
-import instance from "../api/index";
 import CreatableSelect from "react-select/creatable";
 import { getIngredients } from "../api/ingredient";
 
@@ -98,24 +88,23 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
   }, [selectedContinent]);
 
   const inputStyle =
-    "w-full px-4 py-2 bg-white border-2 border-[#84B850] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#456D1E] font-adventure text-[#1A4D1A]";
-  const labelStyle =
-    "block text-[#1A4D1A] text-lg font-adventure mb-2 flex items-center";
+    "w-full px-4 py-2 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800";
+  const labelStyle = "block text-gray-700 text-lg mb-2 flex items-center";
 
   const selectStyles = {
     control: (provided) => ({
       ...provided,
       backgroundColor: "white",
-      borderColor: "#84B850",
+      borderColor: "#D1D5DB",
       borderRadius: "0.5rem",
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? "#456D1E" : "white",
-      color: state.isSelected ? "white" : "#1A4D1A",
+      backgroundColor: state.isSelected ? "#2563EB" : "white",
+      color: state.isSelected ? "white" : "#1F2937",
       "&:hover": {
-        backgroundColor: "#84B850",
-        color: "white",
+        backgroundColor: "#BFDBFE",
+        color: "#1F2937",
       },
     }),
     menu: (provided) => ({
@@ -129,16 +118,14 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
   if (!isLoggedIn) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-[#37B0E6] rounded-lg shadow-lg p-8 max-w-2xl w-full text-center">
-          <h2 className="text-3xl text-[#1A4D1A] font-adventure mb-6">
-            Please Log In
-          </h2>
-          <p className="text-[#1A4D1A] font-adventure mb-4">
+        <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full text-center">
+          <h2 className="text-3xl text-gray-800 mb-6">Please Log In</h2>
+          <p className="text-gray-600 mb-4">
             You need to be logged in to add a new recipe.
           </p>
           <button
             onClick={onClose}
-            className="bg-[#84B850] text-white py-2 px-4 rounded-md hover:bg-[#456D1E] transition-colors duration-300 font-adventure font-bold"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300 font-bold"
           >
             Close
           </button>
@@ -149,17 +136,17 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
-      <div className="bg-gradient-to-br from-[#37B0E6] to-[#84B850] rounded-2xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="absolute top-4 right-4 text-white"
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
           onClick={onClose}
         >
           <X size={24} />
         </motion.button>
-        <h2 className="text-4xl font-bold text-white mb-8 text-center font-adventure">
-          Chart Your Recipe
+        <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center">
+          Add New Recipe
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -204,7 +191,6 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
               options={continents}
               onChange={(selected) => setSelectedContinent(selected)}
               value={selectedContinent}
-              className="font-adventure"
               placeholder="Select a continent"
               styles={selectStyles}
             />
@@ -217,7 +203,6 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
               options={filteredCountries}
               onChange={setSelectedCountry}
               value={selectedCountry}
-              className="font-adventure"
               isDisabled={!selectedContinent}
               placeholder="Select a country"
               styles={selectStyles}
@@ -244,7 +229,6 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
               }))}
               onChange={setSelectedIngredients}
               value={selectedIngredients}
-              className="font-adventure"
               placeholder="Select ingredients"
               styles={selectStyles}
               required
@@ -269,7 +253,7 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
               onClick={onClose}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-1/2 bg-[#456D1E] text-white py-3 rounded-lg hover:bg-[#84B850] transition-colors duration-300 font-adventure font-bold text-lg shadow-md"
+              className="w-1/2 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition-colors duration-300 font-bold text-lg shadow-md"
             >
               Cancel
             </motion.button>
@@ -277,9 +261,9 @@ const AddRecipe = ({ show, onClose, username, isLoggedIn }) => {
               type="submit"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-1/2 bg-[#84B850] text-white py-3 rounded-lg hover:bg-[#456D1E] transition-colors duration-300 font-adventure font-bold text-lg shadow-md"
+              className="w-1/2 bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300 font-bold text-lg shadow-md"
             >
-              Chart Recipe
+              Add Recipe
             </motion.button>
           </div>
         </form>
